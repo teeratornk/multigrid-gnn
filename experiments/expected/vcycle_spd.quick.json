@@ -1,0 +1,217 @@
+{
+  "checks": {
+    "positive_rayleigh": true,
+    "symmetric_at_equal_counts": true,
+    "transpose_exact": true,
+    "unsymmetric_at_unequal_counts": true
+  },
+  "config": {
+    "cases": {
+      "conjugate_cavity": {
+        "name": "conjugate_cavity",
+        "params": {
+          "n": 64
+        }
+      },
+      "engine_bore": {
+        "name": "engine_bore",
+        "params": {
+          "bore_frac": 0.42,
+          "contrast": 1000.0,
+          "liner_contrast": 300.0,
+          "liner_frac": 0.06,
+          "n": 64
+        }
+      },
+      "heat_sink": {
+        "name": "heat_sink",
+        "params": {
+          "contrast": 1000.0,
+          "fins": 4,
+          "n": 64
+        }
+      }
+    },
+    "deterministic": true,
+    "dtype": "float64",
+    "experiment": {
+      "asymmetry_floor": 1e-06,
+      "cases": [
+        "conjugate_cavity",
+        "heat_sink",
+        "engine_bore"
+      ],
+      "n_vectors": 8,
+      "name": "vcycle_spd",
+      "profiles": {
+        "paper": {
+          "device": "cuda",
+          "sizes": [
+            32,
+            64,
+            128
+          ]
+        },
+        "quick": {
+          "device": "cpu",
+          "sizes": [
+            16,
+            32
+          ]
+        }
+      },
+      "roundoff": 1e-14,
+      "sweeps": [
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          1
+        ]
+      ]
+    },
+    "seed": 0,
+    "vcycle": {
+      "max_iter": 200,
+      "max_levels": 10,
+      "n_post": 2,
+      "n_pre": 2,
+      "name": "graph_mg",
+      "omega": 0.7,
+      "rtol": 1e-08,
+      "use_sparse_mm": false
+    }
+  },
+  "experiment": "vcycle_spd",
+  "headline": {
+    "rayleigh_min": 0.016500325319947405,
+    "symmetry_equal_max": 1.8461776727453992e-17,
+    "symmetry_unequal_max": 0.0035188991116569504,
+    "symmetry_unequal_min": 0.00020689030962097718
+  },
+  "profile": "quick",
+  "rows": [
+    {
+      "case": "conjugate_cavity",
+      "levels": 3,
+      "n": 16,
+      "n_post": 2,
+      "n_pre": 2,
+      "rayleigh_min": 0.37260041417403905,
+      "symmetry_defect": 0.0,
+      "transpose_defect": 0.0
+    },
+    {
+      "case": "conjugate_cavity",
+      "levels": 3,
+      "n": 16,
+      "n_post": 1,
+      "n_pre": 3,
+      "rayleigh_min": 0.37323744917047086,
+      "symmetry_defect": 0.002573327446069619,
+      "transpose_defect": 0.0
+    },
+    {
+      "case": "conjugate_cavity",
+      "levels": 4,
+      "n": 32,
+      "n_post": 2,
+      "n_pre": 2,
+      "rayleigh_min": 0.4111675093928766,
+      "symmetry_defect": 0.0,
+      "transpose_defect": 0.0
+    },
+    {
+      "case": "conjugate_cavity",
+      "levels": 4,
+      "n": 32,
+      "n_post": 1,
+      "n_pre": 3,
+      "rayleigh_min": 0.41103132118519503,
+      "symmetry_defect": 0.0010222544535402553,
+      "transpose_defect": 0.0
+    },
+    {
+      "case": "heat_sink",
+      "levels": 3,
+      "n": 16,
+      "n_post": 2,
+      "n_pre": 2,
+      "rayleigh_min": 0.25425427221977054,
+      "symmetry_defect": 9.872923767247816e-18,
+      "transpose_defect": 0.0
+    },
+    {
+      "case": "heat_sink",
+      "levels": 3,
+      "n": 16,
+      "n_post": 1,
+      "n_pre": 3,
+      "rayleigh_min": 0.2540807572886454,
+      "symmetry_defect": 0.0030273815814475793,
+      "transpose_defect": 0.0
+    },
+    {
+      "case": "heat_sink",
+      "levels": 4,
+      "n": 32,
+      "n_post": 2,
+      "n_pre": 2,
+      "rayleigh_min": 0.3251523088123226,
+      "symmetry_defect": 1.8461776727453992e-17,
+      "transpose_defect": 0.0
+    },
+    {
+      "case": "heat_sink",
+      "levels": 4,
+      "n": 32,
+      "n_post": 1,
+      "n_pre": 3,
+      "rayleigh_min": 0.3260143472842225,
+      "symmetry_defect": 0.0024793689237480746,
+      "transpose_defect": 0.0
+    },
+    {
+      "case": "engine_bore",
+      "levels": 3,
+      "n": 16,
+      "n_post": 2,
+      "n_pre": 2,
+      "rayleigh_min": 0.016558146332277462,
+      "symmetry_defect": 0.0,
+      "transpose_defect": 0.0
+    },
+    {
+      "case": "engine_bore",
+      "levels": 3,
+      "n": 16,
+      "n_post": 1,
+      "n_pre": 3,
+      "rayleigh_min": 0.016500325319947405,
+      "symmetry_defect": 0.0035188991116569504,
+      "transpose_defect": 0.0
+    },
+    {
+      "case": "engine_bore",
+      "levels": 4,
+      "n": 32,
+      "n_post": 2,
+      "n_pre": 2,
+      "rayleigh_min": 0.030736426854000663,
+      "symmetry_defect": 5.450425800279205e-19,
+      "transpose_defect": 0.0
+    },
+    {
+      "case": "engine_bore",
+      "levels": 4,
+      "n": 32,
+      "n_post": 1,
+      "n_pre": 3,
+      "rayleigh_min": 0.030763333034984578,
+      "symmetry_defect": 0.00020689030962097718,
+      "transpose_defect": 0.0
+    }
+  ]
+}

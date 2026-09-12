@@ -1,0 +1,10 @@
+quantity,value,unit
+"grid-converged Nu, k_r=1, T_p=0.1, Ra=10^4",1.059,
+"grid-converged Nu, k_r=1, T_p=0.1, Ra=10^5",1.751,
+"grid-converged Nu, k_r=1, T_p=0.1, Ra=10^6",2.794,
+"grid-converged Nu, k_r=1, T_p=0.2, Ra=10^4",1.020,
+"grid-converged Nu, k_r=1, T_p=0.2, Ra=10^5",1.432,
+"grid-converged Nu, k_r=1, T_p=0.2, Ra=10^6",2.123,
+"reduction from T_p=0.1 to T_p=0.2, Ra=10^4",3.7,%
+"reduction from T_p=0.1 to T_p=0.2, Ra=10^5",18.2,%
+"reduction from T_p=0.1 to T_p=0.2, Ra=10^6",24.0,%

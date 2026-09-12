@@ -1,0 +1,5 @@
+quantity,value,unit
+"coefficient of the linear ramp in y of the CNN pressure error, all meshes",-1.16,
+"coefficient of that ramp, h_64",-1.159,
+"coefficient of that ramp, h_128",-1.152,
+"share of the squared pressure error in the ramp at all four meshes, more than",98,%

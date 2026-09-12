@@ -1,0 +1,22 @@
+name: hierarchy_rebuild
+# Build the hierarchy twice per NumPy seed, and compare every seed with the build from the
+# top-level `seed`. Then solve with each, to see whether the drift matters to the answer.
+profiles:
+  quick: {device: cpu, sizes: [16, 32]}
+  paper: {device: cuda, sizes: [32, 64, 128]}
+cases: [conjugate_cavity, heat_sink, engine_bore]
+seeds: [0, 1, 2, 3, 4]
+pcg_max_iter: ${vcycle.max_iter}   # the CLI's cap; the largest count measured is 20
+# Tolerances come from the spread measured between reruns, 1 and 8 threads (1, 4, 8 and 16 for
+# the drift), CPU and CUDA, and deterministic and nondeterministic CUDA kernels. Each comment gives
+# that spread.
+regression:
+  # Built on the CPU in every profile. The OpenBLAS thread count moves the drift: on one
+  # H200 node, 1, 4 and 16 threads differ from each other and from the 8-thread expectation by up
+  # to 3.2e-8 relative, with identical iteration counts. 1e-6 allows 30 times that spread.
+  drift: {rule: rel, tol: 1.0e-6}
+  drift_max: {rule: rel, tol: 1.0e-6}           # as drift
+  drift_min: {rule: rel, tol: 1.0e-6}           # as drift
+  iterations: {rule: abs, tol: 1}               # spread 0; one iteration of round-off allowance
+  solution_diff: {rule: decades, tol: 0.25, floor: 1.0e-12}       # spread 0.021 decades CPU vs CUDA, x10; zero rows reach 1.5e-13 without deterministic kernels, under the floor
+  solution_diff_max: {rule: decades, tol: 0.25, floor: 1.0e-12}   # as solution_diff

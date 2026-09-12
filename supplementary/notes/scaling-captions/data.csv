@@ -1,0 +1,13 @@
+table,quantity,value,unit
+tab:strongscale,block-Jacobi time per PCG iteration on one GPU,6.29,ms
+tab:strongscale,block-Jacobi time per PCG iteration on eight GPUs,3.09,ms
+tab:strongscale,block-Jacobi kernel speedup on eight GPUs,2.04,
+tab:strongscale,Nicolaides whole-step speedup on four GPUs,1.92,
+tab:strongscale,Nicolaides whole-step speedup on eight GPUs,1.72,
+tab:strongscale,Nicolaides wall time per step on eight GPUs,750,ms
+tab:strongscale,block-Jacobi wall time per step on eight GPUs,829,ms
+tab:weakscale,"block-Jacobi weak efficiency, separate sweep at 2×10^5 DOF per GPU",0.65,
+tab:weakscale,"time per PCG iteration in that sweep, from",4.5,ms
+tab:weakscale,"time per PCG iteration in that sweep, to",6.9,ms
+tab:weak-ceiling,"heat sink one-to-two-GPU onset, full-GPU load",1.32,
+tab:weak-ceiling,"heat sink one-to-two-GPU onset, 2×10^6 DOF per GPU",3.45,

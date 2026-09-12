@@ -1,0 +1,7 @@
+name: heat_sink
+# conjugate fin array: the coefficient jump at the solid-fluid interface is what
+# makes this harder for the coarsening than the uniform cavity
+params:
+  n: 64
+  fins: 4
+  contrast: 1.0e3

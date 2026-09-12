@@ -1,0 +1,26 @@
+\begin{table}[ht]
+\centering
+\caption{\textbf{Strong scaling at matched problem size} ($\approx$54M DOF), distributed GNN solver, H200 GPUs. Speedup $=T_1/T_N$, efficiency $=$ speedup$/N$. DOF are totals over all fields, not the pressure DOF of \Cref{tab:strongscale}.}
+\label{tab:strong}
+\small\setlength{\tabcolsep}{4pt}
+\begin{tabular}{llrrrrrr}
+\toprule
+Problem & Mesh & GPUs & total DOF (M) & total DOF/GPU (M) & ms/iter & Speedup & Eff. \\
+\midrule
+3D cavity & $h_{136}$ & 1 & 53.7 & 53.7 & 1292$\pm$3 & 1.00 & 1.00 \\
+ &  & 2 &  & 26.8 & 1052$\pm$26 & 1.23 & 0.61 \\
+ &  & 4 &  & 13.4 & 692$\pm$8 & 1.87 & 0.47 \\
+ &  & 8 &  & 6.7 & 534$\pm$6 & 2.42 & 0.30 \\
+\midrule
+2D RBC & $h_{1448}$ & 1 & 54.5 & 54.5 & 1188$\pm$2 & 1.00 & 1.00 \\
+ &  & 2 &  & 27.3 & 1033$\pm$58 & 1.15 & 0.58 \\
+ &  & 4 &  & 13.6 & 907$\pm$30 & 1.31 & 0.33 \\
+ &  & 8 &  & 6.8 & 840$\pm$13 & 1.41 & 0.18 \\
+\midrule
+2D CHT & $h_{2040}$ & 1 & 54.1 & 54.1 & 1046$\pm$3 & 1.00 & 1.00 \\
+ &  & 2 &  & 27.1 & 914$\pm$37 & 1.14 & 0.57 \\
+ &  & 4 &  & 13.5 & 875$\pm$45 & 1.20 & 0.30 \\
+ &  & 8 &  & 6.8 & 799$\pm$26 & 1.31 & 0.16 \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,12 @@
+quantity,value,unit
+mesh,h_724,
+pressure DOF,1.05×10^6,
+total DOF,1.36×10^7,
+block-Jacobi time per step on one GPU,349.1,ms
+block-Jacobi time per step on two GPUs,958.4,ms
+block-Jacobi time per step on four GPUs,862.9,ms
+block-Jacobi time per step on eight GPUs,915.1,ms
+"speedup, lowest",0.36,
+"speedup, highest",0.40,
+"parallel efficiency, highest",0.18,
+"parallel efficiency, lowest",0.05,

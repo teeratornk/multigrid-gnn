@@ -1,0 +1,828 @@
+{
+  "checks": {
+    "roundoff_everywhere": true
+  },
+  "config": {
+    "cases": {
+      "conjugate_cavity": {
+        "name": "conjugate_cavity",
+        "params": {
+          "n": 64
+        }
+      },
+      "engine_bore": {
+        "name": "engine_bore",
+        "params": {
+          "bore_frac": 0.42,
+          "contrast": 1000.0,
+          "liner_contrast": 300.0,
+          "liner_frac": 0.06,
+          "n": 64
+        }
+      },
+      "heat_sink": {
+        "name": "heat_sink",
+        "params": {
+          "contrast": 1000.0,
+          "fins": 4,
+          "n": 64
+        }
+      }
+    },
+    "deterministic": true,
+    "dtype": "float64",
+    "experiment": {
+      "cases": [
+        "conjugate_cavity",
+        "heat_sink",
+        "engine_bore"
+      ],
+      "name": "vcycle_identity",
+      "omegas": [
+        0.5,
+        0.7,
+        0.9
+      ],
+      "profiles": {
+        "paper": {
+          "device": "cuda",
+          "sizes": [
+            32,
+            64,
+            128
+          ]
+        },
+        "quick": {
+          "device": "cpu",
+          "sizes": [
+            16,
+            32
+          ]
+        }
+      },
+      "roundoff": 1e-14,
+      "sweeps": [
+        [
+          2,
+          2
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          1
+        ]
+      ]
+    },
+    "seed": 0,
+    "vcycle": {
+      "max_iter": 200,
+      "max_levels": 10,
+      "n_post": 2,
+      "n_pre": 2,
+      "name": "graph_mg",
+      "omega": 0.7,
+      "rtol": 1e-08,
+      "use_sparse_mm": false
+    }
+  },
+  "experiment": "vcycle_identity",
+  "headline": {
+    "rel_diff_max": 2.0522324558552152e-16,
+    "rel_diff_min": 1.6664296849362975e-17
+  },
+  "profile": "paper",
+  "rows": [
+    {
+      "case": "conjugate_cavity",
+      "levels": 4,
+      "n": 32,
+      "n_post": 2,
+      "n_pre": 2,
+      "omega": 0.5,
+      "rel_diff": 5.262131450916398e-17
+    },
+    {
+      "case": "conjugate_cavity",
+      "levels": 4,
+      "n": 32,
+      "n_post": 1,
+      "n_pre": 1,
+      "omega": 0.5,
+      "rel_diff": 4.829113992451628e-17
+    },
+    {
+      "case": "conjugate_cavity",
+      "levels": 4,
+      "n": 32,
+      "n_post": 1,
+      "n_pre": 3,
+      "omega": 0.5,
+      "rel_diff": 4.922109413039696e-17
+    },
+    {
+      "case": "conjugate_cavity",
+      "levels": 4,
+      "n": 32,
+      "n_post": 2,
+      "n_pre": 2,
+      "omega": 0.7,
+      "rel_diff": 6.253031413056442e-17
+    },
+    {
+      "case": "conjugate_cavity",
+      "levels": 4,
+      "n": 32,
+      "n_post": 1,
+      "n_pre": 1,
+      "omega": 0.7,
+      "rel_diff": 4.570087853399797e-17
+    },
+    {
+      "case": "conjugate_cavity",
+      "levels": 4,
+      "n": 32,
+      "n_post": 1,
+      "n_pre": 3,
+      "omega": 0.7,
+      "rel_diff": 4.614182935425375e-17
+    },
+    {
+      "case": "conjugate_cavity",
+      "levels": 4,
+      "n": 32,
+      "n_post": 2,
+      "n_pre": 2,
+      "omega": 0.9,
+      "rel_diff": 5.106620473323363e-17
+    },
+    {
+      "case": "conjugate_cavity",
+      "levels": 4,
+      "n": 32,
+      "n_post": 1,
+      "n_pre": 1,
+      "omega": 0.9,
+      "rel_diff": 6.931092321740079e-17
+    },
+    {
+      "case": "conjugate_cavity",
+      "levels": 4,
+      "n": 32,
+      "n_post": 1,
+      "n_pre": 3,
+      "omega": 0.9,
+      "rel_diff": 4.349413970625483e-17
+    },
+    {
+      "case": "conjugate_cavity",
+      "levels": 4,
+      "n": 64,
+      "n_post": 2,
+      "n_pre": 2,
+      "omega": 0.5,
+      "rel_diff": 1.120025319812403e-16
+    },
+    {
+      "case": "conjugate_cavity",
+      "levels": 4,
+      "n": 64,
+      "n_post": 1,
+      "n_pre": 1,
+      "omega": 0.5,
+      "rel_diff": 6.817764746307982e-17
+    },
+    {
+      "case": "conjugate_cavity",
+      "levels": 4,
+      "n": 64,
+      "n_post": 1,
+      "n_pre": 3,
+      "omega": 0.5,
+      "rel_diff": 7.031804129294814e-17
+    },
+    {
+      "case": "conjugate_cavity",
+      "levels": 4,
+      "n": 64,
+      "n_post": 2,
+      "n_pre": 2,
+      "omega": 0.7,
+      "rel_diff": 5.572586404341731e-17
+    },
+    {
+      "case": "conjugate_cavity",
+      "levels": 4,
+      "n": 64,
+      "n_post": 1,
+      "n_pre": 1,
+      "omega": 0.7,
+      "rel_diff": 7.485160306285252e-17
+    },
+    {
+      "case": "conjugate_cavity",
+      "levels": 4,
+      "n": 64,
+      "n_post": 1,
+      "n_pre": 3,
+      "omega": 0.7,
+      "rel_diff": 1.039904902051568e-16
+    },
+    {
+      "case": "conjugate_cavity",
+      "levels": 4,
+      "n": 64,
+      "n_post": 2,
+      "n_pre": 2,
+      "omega": 0.9,
+      "rel_diff": 8.768303978135559e-17
+    },
+    {
+      "case": "conjugate_cavity",
+      "levels": 4,
+      "n": 64,
+      "n_post": 1,
+      "n_pre": 1,
+      "omega": 0.9,
+      "rel_diff": 7.778705237007548e-17
+    },
+    {
+      "case": "conjugate_cavity",
+      "levels": 4,
+      "n": 64,
+      "n_post": 1,
+      "n_pre": 3,
+      "omega": 0.9,
+      "rel_diff": 8.422736730413433e-17
+    },
+    {
+      "case": "conjugate_cavity",
+      "levels": 5,
+      "n": 128,
+      "n_post": 2,
+      "n_pre": 2,
+      "omega": 0.5,
+      "rel_diff": 7.243396545959352e-17
+    },
+    {
+      "case": "conjugate_cavity",
+      "levels": 5,
+      "n": 128,
+      "n_post": 1,
+      "n_pre": 1,
+      "omega": 0.5,
+      "rel_diff": 2.0522324558552152e-16
+    },
+    {
+      "case": "conjugate_cavity",
+      "levels": 5,
+      "n": 128,
+      "n_post": 1,
+      "n_pre": 3,
+      "omega": 0.5,
+      "rel_diff": 1.3239073468575944e-16
+    },
+    {
+      "case": "conjugate_cavity",
+      "levels": 5,
+      "n": 128,
+      "n_post": 2,
+      "n_pre": 2,
+      "omega": 0.7,
+      "rel_diff": 7.28527850614595e-17
+    },
+    {
+      "case": "conjugate_cavity",
+      "levels": 5,
+      "n": 128,
+      "n_post": 1,
+      "n_pre": 1,
+      "omega": 0.7,
+      "rel_diff": 8.925342162831983e-17
+    },
+    {
+      "case": "conjugate_cavity",
+      "levels": 5,
+      "n": 128,
+      "n_post": 1,
+      "n_pre": 3,
+      "omega": 0.7,
+      "rel_diff": 1.1222931838946325e-16
+    },
+    {
+      "case": "conjugate_cavity",
+      "levels": 5,
+      "n": 128,
+      "n_post": 2,
+      "n_pre": 2,
+      "omega": 0.9,
+      "rel_diff": 8.56589412057272e-17
+    },
+    {
+      "case": "conjugate_cavity",
+      "levels": 5,
+      "n": 128,
+      "n_post": 1,
+      "n_pre": 1,
+      "omega": 0.9,
+      "rel_diff": 7.269722952889798e-17
+    },
+    {
+      "case": "conjugate_cavity",
+      "levels": 5,
+      "n": 128,
+      "n_post": 1,
+      "n_pre": 3,
+      "omega": 0.9,
+      "rel_diff": 8.476734940200885e-17
+    },
+    {
+      "case": "heat_sink",
+      "levels": 4,
+      "n": 32,
+      "n_post": 2,
+      "n_pre": 2,
+      "omega": 0.5,
+      "rel_diff": 5.1232355242127627e-17
+    },
+    {
+      "case": "heat_sink",
+      "levels": 4,
+      "n": 32,
+      "n_post": 1,
+      "n_pre": 1,
+      "omega": 0.5,
+      "rel_diff": 4.3216850011667256e-17
+    },
+    {
+      "case": "heat_sink",
+      "levels": 4,
+      "n": 32,
+      "n_post": 1,
+      "n_pre": 3,
+      "omega": 0.5,
+      "rel_diff": 3.991223239438521e-17
+    },
+    {
+      "case": "heat_sink",
+      "levels": 4,
+      "n": 32,
+      "n_post": 2,
+      "n_pre": 2,
+      "omega": 0.7,
+      "rel_diff": 4.6810761316581187e-17
+    },
+    {
+      "case": "heat_sink",
+      "levels": 4,
+      "n": 32,
+      "n_post": 1,
+      "n_pre": 1,
+      "omega": 0.7,
+      "rel_diff": 6.54931897063912e-17
+    },
+    {
+      "case": "heat_sink",
+      "levels": 4,
+      "n": 32,
+      "n_post": 1,
+      "n_pre": 3,
+      "omega": 0.7,
+      "rel_diff": 3.806380429842629e-17
+    },
+    {
+      "case": "heat_sink",
+      "levels": 4,
+      "n": 32,
+      "n_post": 2,
+      "n_pre": 2,
+      "omega": 0.9,
+      "rel_diff": 6.032922781956193e-17
+    },
+    {
+      "case": "heat_sink",
+      "levels": 4,
+      "n": 32,
+      "n_post": 1,
+      "n_pre": 1,
+      "omega": 0.9,
+      "rel_diff": 4.24341187895437e-17
+    },
+    {
+      "case": "heat_sink",
+      "levels": 4,
+      "n": 32,
+      "n_post": 1,
+      "n_pre": 3,
+      "omega": 0.9,
+      "rel_diff": 4.7679991782745904e-17
+    },
+    {
+      "case": "heat_sink",
+      "levels": 4,
+      "n": 64,
+      "n_post": 2,
+      "n_pre": 2,
+      "omega": 0.5,
+      "rel_diff": 5.796309025928576e-17
+    },
+    {
+      "case": "heat_sink",
+      "levels": 4,
+      "n": 64,
+      "n_post": 1,
+      "n_pre": 1,
+      "omega": 0.5,
+      "rel_diff": 7.093416025883174e-17
+    },
+    {
+      "case": "heat_sink",
+      "levels": 4,
+      "n": 64,
+      "n_post": 1,
+      "n_pre": 3,
+      "omega": 0.5,
+      "rel_diff": 5.525238343599595e-17
+    },
+    {
+      "case": "heat_sink",
+      "levels": 4,
+      "n": 64,
+      "n_post": 2,
+      "n_pre": 2,
+      "omega": 0.7,
+      "rel_diff": 5.930092658606534e-17
+    },
+    {
+      "case": "heat_sink",
+      "levels": 4,
+      "n": 64,
+      "n_post": 1,
+      "n_pre": 1,
+      "omega": 0.7,
+      "rel_diff": 6.244266065803514e-17
+    },
+    {
+      "case": "heat_sink",
+      "levels": 4,
+      "n": 64,
+      "n_post": 1,
+      "n_pre": 3,
+      "omega": 0.7,
+      "rel_diff": 6.732039422482531e-17
+    },
+    {
+      "case": "heat_sink",
+      "levels": 4,
+      "n": 64,
+      "n_post": 2,
+      "n_pre": 2,
+      "omega": 0.9,
+      "rel_diff": 8.612424996148343e-17
+    },
+    {
+      "case": "heat_sink",
+      "levels": 4,
+      "n": 64,
+      "n_post": 1,
+      "n_pre": 1,
+      "omega": 0.9,
+      "rel_diff": 8.503130101876619e-17
+    },
+    {
+      "case": "heat_sink",
+      "levels": 4,
+      "n": 64,
+      "n_post": 1,
+      "n_pre": 3,
+      "omega": 0.9,
+      "rel_diff": 7.360946202635413e-17
+    },
+    {
+      "case": "heat_sink",
+      "levels": 5,
+      "n": 128,
+      "n_post": 2,
+      "n_pre": 2,
+      "omega": 0.5,
+      "rel_diff": 1.086111436737036e-16
+    },
+    {
+      "case": "heat_sink",
+      "levels": 5,
+      "n": 128,
+      "n_post": 1,
+      "n_pre": 1,
+      "omega": 0.5,
+      "rel_diff": 9.181376855163471e-17
+    },
+    {
+      "case": "heat_sink",
+      "levels": 5,
+      "n": 128,
+      "n_post": 1,
+      "n_pre": 3,
+      "omega": 0.5,
+      "rel_diff": 1.1814983279459992e-16
+    },
+    {
+      "case": "heat_sink",
+      "levels": 5,
+      "n": 128,
+      "n_post": 2,
+      "n_pre": 2,
+      "omega": 0.7,
+      "rel_diff": 8.945621459090071e-17
+    },
+    {
+      "case": "heat_sink",
+      "levels": 5,
+      "n": 128,
+      "n_post": 1,
+      "n_pre": 1,
+      "omega": 0.7,
+      "rel_diff": 1.266945486691507e-16
+    },
+    {
+      "case": "heat_sink",
+      "levels": 5,
+      "n": 128,
+      "n_post": 1,
+      "n_pre": 3,
+      "omega": 0.7,
+      "rel_diff": 1.2358551780278249e-16
+    },
+    {
+      "case": "heat_sink",
+      "levels": 5,
+      "n": 128,
+      "n_post": 2,
+      "n_pre": 2,
+      "omega": 0.9,
+      "rel_diff": 9.743008062873392e-17
+    },
+    {
+      "case": "heat_sink",
+      "levels": 5,
+      "n": 128,
+      "n_post": 1,
+      "n_pre": 1,
+      "omega": 0.9,
+      "rel_diff": 1.420547313390398e-16
+    },
+    {
+      "case": "heat_sink",
+      "levels": 5,
+      "n": 128,
+      "n_post": 1,
+      "n_pre": 3,
+      "omega": 0.9,
+      "rel_diff": 1.161982230098752e-16
+    },
+    {
+      "case": "engine_bore",
+      "levels": 4,
+      "n": 32,
+      "n_post": 2,
+      "n_pre": 2,
+      "omega": 0.5,
+      "rel_diff": 5.795376445132432e-17
+    },
+    {
+      "case": "engine_bore",
+      "levels": 4,
+      "n": 32,
+      "n_post": 1,
+      "n_pre": 1,
+      "omega": 0.5,
+      "rel_diff": 1.9373690736831818e-17
+    },
+    {
+      "case": "engine_bore",
+      "levels": 4,
+      "n": 32,
+      "n_post": 1,
+      "n_pre": 3,
+      "omega": 0.5,
+      "rel_diff": 2.353848634098304e-17
+    },
+    {
+      "case": "engine_bore",
+      "levels": 4,
+      "n": 32,
+      "n_post": 2,
+      "n_pre": 2,
+      "omega": 0.7,
+      "rel_diff": 2.776331595834654e-17
+    },
+    {
+      "case": "engine_bore",
+      "levels": 4,
+      "n": 32,
+      "n_post": 1,
+      "n_pre": 1,
+      "omega": 0.7,
+      "rel_diff": 5.389417014841539e-17
+    },
+    {
+      "case": "engine_bore",
+      "levels": 4,
+      "n": 32,
+      "n_post": 1,
+      "n_pre": 3,
+      "omega": 0.7,
+      "rel_diff": 1.7589614098923987e-17
+    },
+    {
+      "case": "engine_bore",
+      "levels": 4,
+      "n": 32,
+      "n_post": 2,
+      "n_pre": 2,
+      "omega": 0.9,
+      "rel_diff": 1.6664296849362975e-17
+    },
+    {
+      "case": "engine_bore",
+      "levels": 4,
+      "n": 32,
+      "n_post": 1,
+      "n_pre": 1,
+      "omega": 0.9,
+      "rel_diff": 2.28840735826317e-17
+    },
+    {
+      "case": "engine_bore",
+      "levels": 4,
+      "n": 32,
+      "n_post": 1,
+      "n_pre": 3,
+      "omega": 0.9,
+      "rel_diff": 3.2210937001744465e-17
+    },
+    {
+      "case": "engine_bore",
+      "levels": 4,
+      "n": 64,
+      "n_post": 2,
+      "n_pre": 2,
+      "omega": 0.5,
+      "rel_diff": 5.852855605187519e-17
+    },
+    {
+      "case": "engine_bore",
+      "levels": 4,
+      "n": 64,
+      "n_post": 1,
+      "n_pre": 1,
+      "omega": 0.5,
+      "rel_diff": 7.494484587513857e-17
+    },
+    {
+      "case": "engine_bore",
+      "levels": 4,
+      "n": 64,
+      "n_post": 1,
+      "n_pre": 3,
+      "omega": 0.5,
+      "rel_diff": 4.891979976678342e-17
+    },
+    {
+      "case": "engine_bore",
+      "levels": 4,
+      "n": 64,
+      "n_post": 2,
+      "n_pre": 2,
+      "omega": 0.7,
+      "rel_diff": 3.8362370602540706e-17
+    },
+    {
+      "case": "engine_bore",
+      "levels": 4,
+      "n": 64,
+      "n_post": 1,
+      "n_pre": 1,
+      "omega": 0.7,
+      "rel_diff": 5.889825134081806e-17
+    },
+    {
+      "case": "engine_bore",
+      "levels": 4,
+      "n": 64,
+      "n_post": 1,
+      "n_pre": 3,
+      "omega": 0.7,
+      "rel_diff": 4.3200426135232813e-17
+    },
+    {
+      "case": "engine_bore",
+      "levels": 4,
+      "n": 64,
+      "n_post": 2,
+      "n_pre": 2,
+      "omega": 0.9,
+      "rel_diff": 6.46645955051885e-17
+    },
+    {
+      "case": "engine_bore",
+      "levels": 4,
+      "n": 64,
+      "n_post": 1,
+      "n_pre": 1,
+      "omega": 0.9,
+      "rel_diff": 4.0923356994637524e-17
+    },
+    {
+      "case": "engine_bore",
+      "levels": 4,
+      "n": 64,
+      "n_post": 1,
+      "n_pre": 3,
+      "omega": 0.9,
+      "rel_diff": 4.503432425609235e-17
+    },
+    {
+      "case": "engine_bore",
+      "levels": 5,
+      "n": 128,
+      "n_post": 2,
+      "n_pre": 2,
+      "omega": 0.5,
+      "rel_diff": 7.412252919415359e-17
+    },
+    {
+      "case": "engine_bore",
+      "levels": 5,
+      "n": 128,
+      "n_post": 1,
+      "n_pre": 1,
+      "omega": 0.5,
+      "rel_diff": 1.1205491799915807e-16
+    },
+    {
+      "case": "engine_bore",
+      "levels": 5,
+      "n": 128,
+      "n_post": 1,
+      "n_pre": 3,
+      "omega": 0.5,
+      "rel_diff": 6.567176536709735e-17
+    },
+    {
+      "case": "engine_bore",
+      "levels": 5,
+      "n": 128,
+      "n_post": 2,
+      "n_pre": 2,
+      "omega": 0.7,
+      "rel_diff": 4.3868868861792097e-17
+    },
+    {
+      "case": "engine_bore",
+      "levels": 5,
+      "n": 128,
+      "n_post": 1,
+      "n_pre": 1,
+      "omega": 0.7,
+      "rel_diff": 5.98868839647184e-17
+    },
+    {
+      "case": "engine_bore",
+      "levels": 5,
+      "n": 128,
+      "n_post": 1,
+      "n_pre": 3,
+      "omega": 0.7,
+      "rel_diff": 1.2370647700233875e-16
+    },
+    {
+      "case": "engine_bore",
+      "levels": 5,
+      "n": 128,
+      "n_post": 2,
+      "n_pre": 2,
+      "omega": 0.9,
+      "rel_diff": 6.107127666925437e-17
+    },
+    {
+      "case": "engine_bore",
+      "levels": 5,
+      "n": 128,
+      "n_post": 1,
+      "n_pre": 1,
+      "omega": 0.9,
+      "rel_diff": 4.862738245648936e-17
+    },
+    {
+      "case": "engine_bore",
+      "levels": 5,
+      "n": 128,
+      "n_post": 1,
+      "n_pre": 3,
+      "omega": 0.9,
+      "rel_diff": 5.323273609016505e-17
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+\begin{table}[ht]\centering
+\caption{\textbf{Weak scaling of the two transient two-dimensional problems at the single-GPU
+memory ceiling.} Both at a fixed $\approx\!4.2\times10^{6}$ pressure DOF/GPU, the single-GPU
+ceiling, with $n\propto\sqrt{\text{NPROC}}$ and $y$-slab decomposition, over 200 steps. Weak
+efficiency is referenced to two GPUs, with the two-level figure against one GPU repeated in
+the last efficiency column (\Cref{sec:si-scaling-protocol}). At the ceiling the global coarse
+correction is solved redundantly per rank, so its cost grows with the total problem, and that
+is the residual loss in both.
+\emph{Rayleigh--B\'enard:} $\Gamma=2$ cell, $\mathrm{Ra}=10^{7}$, transient rotational-IPCS + RK3--CN,
+growing to $3.4\times10^{7}$ total pressure DOFs on eight GPUs; the $1.6\times$ one-to-two-GPU
+step is the onset, and the eight-GPU two-level efficiency is $0.64$ against two GPUs ($0.39$
+against one).
+\emph{Conjugate cavity:} $\mathrm{Ra}=10^{6}$, $T_p=0.1$, $k_s=k_f$, conjugate rotational-IPCS +
+RK3--CN, growing to $3.3\times10^{7}$ total on eight GPUs; the onset is $1.5\times$.}
+\label{tab:weak-transient}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabular}{r r r r r r r r r}
+\toprule
+ & & \multicolumn{2}{c}{ms/step} & \multicolumn{2}{c}{weak eff.\ (vs 2)} & \multicolumn{1}{c}{(vs 1)} & \multicolumn{2}{c}{CG iters/step} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(lr){7-7}\cmidrule(lr){8-9}
+{GPUs} & {DOF/GPU} & {two-level} & {block-Jac.} & {two-level} & {block-Jac.} & {two-level} & {two-level} & {block-Jac.} \\
+\midrule
+\multicolumn{9}{l}{\emph{Unsteady Rayleigh--B\'enard}}\\
+\midrule
+1 & 4.20M & 1150 & 1155 & {--}  & {--}  & 1.00 & 78  & 78            \\
+2 & 4.20M & 1886 & 3794 & 1.00  & 1.00  & 0.61 & 127 & 699           \\
+4 & 4.19M & 2156 & 4820 & 0.87  & 0.79  & 0.53 & 151 & 900$^\dagger$ \\
+8 & 4.20M & 2929 & 5259 & 0.64  & 0.72  & 0.39 & 178 & 900$^\dagger$ \\
+\midrule
+\multicolumn{9}{l}{\emph{Two-dimensional conjugate cavity}}\\
+\midrule
+1 & 4.17M & 901  & 900  & {--}  & {--}  & 1.00 & 241 & 242           \\
+2 & 4.17M & 1333 & 3330 & 1.00  & 1.00  & 0.68 & 104 & 655           \\
+4 & 4.16M & 1884 & 4481 & 0.71  & 0.74  & 0.48 & 162 & 900$^\dagger$ \\
+8 & 4.17M & 2454 & 4539 & 0.54  & 0.73  & 0.37 & 179 & 900$^\dagger$ \\
+\bottomrule
+\end{tabular}
+
+\smallskip
+{\footnotesize $^\dagger$ At the pressure cap (\Cref{sec:si-scaling-protocol}), where
+block-Jacobi is $\approx\!2\times$ slower on Rayleigh--B\'enard and $1.9$--$2.5\times$ slower on
+the conjugate cavity with an under-resolved pressure.}
+\end{table}

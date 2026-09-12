@@ -1,0 +1,12 @@
+\paragraph{CNN--SIMPLE (panels c, d): boundary-stencil floor.}
+The CNN does not converge cleanly: while temperature attains
+$\approx\!\mathcal{O}(h^{1.5})$, both velocity and pressure are bounded
+below by a non-vanishing $L^{2}$ floor (velocity $\sim 1.5\times 10^{-3}$,
+pressure $\sim 3.4\times 10^{-1}$ in 2D, essentially independent of $h$
+for $h_{256}$ and coarser). A modal decomposition of the pressure error at
+every refinement shows that the error is essentially monomodal: the
+linear ramp $-1.16\,(y - 0.5)$ accounts for more than $98\%$ of
+$\|e_{p}\|_{L^{2}}^{2}$ at all four meshes, with coefficient drifting only
+between $-1.159$ at $h_{64}$ and $-1.152$ at $h_{128}$. Five probes
+localize the mechanism; \Cref{tab:cnn-probes} lists each intervention with its
+result and what it rules out.

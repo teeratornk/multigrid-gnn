@@ -1,0 +1,23 @@
+\begin{table}[ht]\centering
+\caption{\textbf{Engine meshes and metal-temperature QoI, grid convergence.} Forward solve
+without calibration to a target temperature ($\mathrm{Ra}=10^{5}$, $k_s/k_f=10^{3}$, $q''=0.5\,$MW\,m$^{-2}$, $L=0.1\,$m,
+coolant $360\,$K), mapped to Kelvin for a cast-iron head/liner ($k_s=55$) as an illustrative
+dimensional mapping. ``min dih.'' is the minimum tetrahedron dihedral angle, ``iface facets''
+the number of fluid--solid interface triangles and $h_{\Gamma}/R$ their mean edge length
+relative to the bore radius. The fire-deck surface (nondimensional $\theta=0.1833$) is
+grid-independent.}
+\label{tab:engine-mesh}\label{tab:engine-qoi}
+\footnotesize\setlength{\tabcolsep}{5pt}
+\begin{tabular}{l r r S r S S S}
+\toprule
+{Mesh} & {tets} & {P\textsubscript{2}} & {min dih.} & {iface}
+  & {$h_{\Gamma}/R$} & {fire-deck} & {liner-side} \\
+       & {}      & {DOF}                & {(deg)}    & {facets}
+  & {}               & {(K)}         & {mean (K)} \\
+\midrule
+coarse & 27573  & 41036  & 13.7 & 3178 & 0.121 & 526.6 & 394.5 \\
+medium & 61327  & 88897  & 12.0 & 5684 & 0.091 & 526.6 & 397.6 \\
+fine   & 125781 & 178636 & 12.0 & 9260 & 0.071 & 526.6 & 400.6 \\
+\bottomrule
+\end{tabular}
+\end{table}

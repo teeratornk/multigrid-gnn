@@ -1,0 +1,29 @@
+name: stationary_mismatch
+# A V-cycle built on the uniform-coefficient operator, applied to the contrast 1e3 ones:
+# first as the stationary iteration at fixed omega, then just below its stability limit
+# 2/lambda_max(BS), then as the preconditioner of CG.
+profiles:
+  quick: {device: cpu, sizes: [16, 32]}
+  paper: {device: cuda, sizes: [32, 64, 128]}
+source: conjugate_cavity
+targets: [heat_sink, engine_bore]
+omegas: [1.0, 0.5, 0.3, 0.1, 0.05]   # every under-relaxation the Supplementary note tried
+below_limit_fraction: 0.9    # the last omega is this fraction of 2/lambda_max(BS)
+below_limit_max_iter: 200    # enough to show no growth; the predicted radius there is 0.998 to 0.999
+lanczos_steps: 300           # cap; the recursion stops once the residual falls by fp64 epsilon
+stationary_max_iter: 2000    # cap; diverging runs stop in 3 to 6 iterations
+pcg_max_iter: 1000           # cap, 5x the largest count measured (170)
+divergence_ratio: 1.0e8      # relative residual taken as divergence; converging runs stay under 1
+# Tolerances come from the spread measured between reruns, 1 and 8 threads, CPU and CUDA,
+# and deterministic and nondeterministic CUDA kernels. Each comment gives that spread.
+regression:
+  omega: {rule: rel, tol: 2.0e-7}                 # below-limit omega, spread 1.5e-8 with nondeterministic kernels, x10 and rounded up
+  omega_limit: {rule: rel, tol: 2.0e-7}           # spread 1.5e-8 with nondeterministic kernels, x10 and rounded up
+  omega_limit_max: {rule: rel, tol: 2.0e-7}       # as omega_limit
+  ritz_max: {rule: rel, tol: 2.0e-7}              # spread 1.5e-8 with nondeterministic kernels, x10 and rounded up
+  ritz_min: {rule: rel, tol: 3.0e-8}              # spread 2.9e-9 with nondeterministic kernels, x10 and rounded up
+  predicted_radius: {rule: rel, tol: 2.0e-7}      # spread 1.5e-8 with nondeterministic kernels, x10 and rounded up
+  stationary_residual: {rule: rel, tol: 6.0e-8}   # spread 5.7e-9 with nondeterministic kernels, x10 and rounded up
+  stationary_iterations: {rule: abs, tol: 1}      # spread 0; one iteration of round-off allowance
+  pcg_iterations: {rule: abs, tol: 4}             # spread 2 (140 to 142) with nondeterministic kernels and CPU vs CUDA, x2
+  pcg_iterations_max: {rule: abs, tol: 4}         # as pcg_iterations

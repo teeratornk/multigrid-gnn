@@ -1,0 +1,24 @@
+\paragraph{GNN--SIMPLE (panels a, b).} The Taylor--Hood pair approaches its
+theoretical orders as the mesh refines, but the least-squares slopes fitted over
+the full 2D mesh range (shown in panel a, $\approx\!2.75$ for temperature and
+$\approx\!1.76$ for pressure) \emph{understate} them, for two reasons that both
+flatten a global fit: the coarsest meshes are pre-asymptotic, and the finest 2D
+meshes reach the discrete-fixed-point residual floor. The velocity error between
+$h_{256}$ and $h_{512}$ drops below $\sim\!2\times 10^{-9}$, close to the floor for
+the chosen iteration tolerance, so the apparent order there is not bounded by the
+spatial discretization. The mesh-pairwise rates over the asymptotic range that sits
+above the floor recover the theoretical values: in 3D, on the fully three-dimensional
+field, the orders between $h_{32}$ and $h_{64}$ are within $0.06$ of the theoretical
+$\{3, 3, 2\}$, all three velocity components, including the out-of-plane $w$, at
+$\approx\!2.95$, temperature at $2.94$, and pressure at $2.03$
+(Extended Data Table~\ref{tab:mms-3d-full}). The operator-level checks below isolate the clean
+$\mathcal{O}(h^{2})$ pressure and $\mathcal{O}(h^{3})$ velocity rates directly. A modal decomposition of the GNN pressure
+error in 2D shows that $\|e_{p}\|_{L^{2}}^{2}$ is dominated (over $99.8\%$
+at $h_{256}$ and coarser) by the $\cos(2\pi x)\cos(2\pi y)$ mode, the same
+shape as the exact pressure, with the modal coefficient decaying as
+$\{1.40\times 10^{-3},\ 3.18\times 10^{-4},\ 7.51\times 10^{-5},\
+1.88\times 10^{-5}\}$ across $h_{64},\ldots,h_{512}$, i.e.\ ratios
+$4.4\times,\ 4.2\times,\ 4.0\times$ corresponding to a clean
+$\mathcal{O}(h^{2})$. This is the textbook FEM picture: the discrete
+approximation under-amplifies the resolved cosine mode by a smaller
+fraction at each refinement.

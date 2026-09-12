@@ -1,0 +1,54 @@
+cff-version: 1.2.0
+title: "gnn4buoyancy-mwe: a multigrid V-cycle as message-passing layers"
+message: "If you use this software, please cite the paper it accompanies."
+type: software
+authors:
+  - family-names: Kadeethum
+    given-names: Teeratorn
+    email: meen.kadeethum@siemens-energy.com
+version: 1.2.0
+license: MIT
+repository-code: "https://github.com/teeratornk/multigrid-gnn"
+abstract: >-
+  Minimal working example accompanying "Classical finite-element solvers as
+  differentiable graph programs on GPUs": the fixed-weight algebraic multigrid
+  pressure solve expressed as message-passing layers, with the test suite that
+  verifies the graph execution reproduces the multigrid algebra it represents. It
+  also keeps the tables, figures and text moved out of the paper's Supplementary
+  Information, as data with code that renders and checks them.
+# The paper this software accompanies. All nine authors are listed, in manuscript order.
+# A deposit platform ingests this block verbatim and renders it as the citation, so a
+# short list here misattributes the paper wherever the software is indexed.
+preferred-citation:
+  type: article
+  title: "Classical finite-element solvers as differentiable graph programs on GPUs"
+  authors:
+    - family-names: Kadeethum
+      given-names: Teeratorn
+      email: meen.kadeethum@siemens-energy.com
+      affiliation: "Siemens Energy, AI Lab, Orlando, USA"
+    - family-names: Badnava
+      given-names: Babak
+      affiliation: "Siemens Energy, AI Lab, Orlando, USA"
+    - family-names: Athreya
+      given-names: Vignesh
+      affiliation: "Siemens Energy, AI Lab, Orlando, USA"
+    - family-names: Chen
+      given-names: Boyang
+      affiliation: "Imperial College London, UK"
+    - family-names: Heaney
+      given-names: Claire E.
+      affiliation: "Imperial College London, UK"
+    - family-names: Ballarin
+      given-names: Francesco
+      affiliation: "Università Cattolica del Sacro Cuore, Italy"
+    - family-names: Sethi
+      given-names: Harpreet
+      affiliation: "NVIDIA, USA"
+    - family-names: Li
+      given-names: Hongying
+      affiliation: "Nanyang Technological University, Singapore"
+    - family-names: Pain
+      given-names: Christopher C.
+      affiliation: "Imperial College London, UK"
+  year: 2026

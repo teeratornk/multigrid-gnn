@@ -1,0 +1,24 @@
+\begin{table}[ht]
+\centering
+\caption{\textbf{Strong scaling at the largest meshes} (near the single-GPU memory ceiling). RBC/CHT use a 2-GPU baseline (their meshes OOM on one GPU), so their efficiencies are not comparable to the single-GPU-referenced rows above. DOF are totals over all fields.}
+\label{tab:strongmax}
+\small\setlength{\tabcolsep}{4pt}
+\begin{tabular}{llrrrrrr}
+\toprule
+Problem & Mesh & GPUs & total DOF (M) & total DOF/GPU (M) & ms/iter & Speedup & Eff. \\
+\midrule
+3D cavity & $h_{144}$ & 1 & 63.7 & 63.7 & 1404$\pm$0 & 1.00 & 1.00 \\
+ &  & 2 &  & 31.8 & 1218$\pm$5 & 1.15 & 0.58 \\
+ &  & 4 &  & 15.9 & 769$\pm$10 & 1.83 & 0.46 \\
+ &  & 8 &  & 8.0 & 576$\pm$7 & 2.44 & 0.30 \\
+\midrule
+2D RBC & $h_{1980}$ & 2 & 102.0 & 51.0 & 1887$\pm$105 & 1.00 & 1.00 \\
+ &  & 4 &  & 25.5 & 1206$\pm$10 & 1.56 & 0.78 \\
+ &  & 8 &  & 12.7 & 1106$\pm$70 & 1.71 & 0.43 \\
+\midrule
+2D CHT & $h_{2800}$ & 2 & 102.0 & 51.0 & 1563$\pm$66 & 1.00 & 1.00 \\
+ &  & 4 &  & 25.5 & 1177$\pm$114 & 1.33 & 0.66 \\
+ &  & 8 &  & 12.7 & 1057$\pm$284 & 1.48 & 0.37 \\
+\bottomrule
+\end{tabular}
+\end{table}

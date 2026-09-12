@@ -1,0 +1,101 @@
+# The material moved out of the paper's Supplementary Information:
+# `gnn4buoyancy-supplementary mode=<render|check|refresh>`. See src/gnn4buoyancy/supplementary.py.
+root: supplementary      # resolved against the directory the app starts in
+mode: render             # render: tables and figures into the run directory | check | refresh
+
+# The removed tables, by label without the tab: prefix, and mms-distributed, a kept table exported as
+# printed before the cut, with the two wall-clock columns the cut removed.
+tables: [cnn-probes, engine-mesh, mgsolver, mms-distributed, msiter, strong, strongmax,
+         strongscale-n161, weak, weak-transient]
+
+# Results the pre-cut SI printed only in a paragraph or a caption: notes/<name>/published.tex as
+# printed, and the values kept by hand in notes/<name>/data.csv.
+notes:
+  rbc-block-jacobi-h724:
+    title: Block-Jacobi strong scaling of the unsteady Rayleigh-Bénard cell on h_724
+  coarse-space-ablation:
+    title: Pressure iterations with an affine coarse space on the 3D cavity
+  partition-thickness:
+    title: Conjugate cavity Nusselt numbers at two partition thicknesses
+  engine-matched-tolerance:
+    title: Engine throughput ratios with both codes matched at a tolerance of 1e-7
+  scaling-captions:
+    title: Scaling results printed only in the pre-cut captions of three kept tables
+  mms-modal-coefficients:
+    title: Modal decomposition of the GNN pressure error, 2D manufactured solution
+  cnn-ramp-coefficients:
+    title: Linear pressure ramp in the CNN manufactured-solution error
+
+# The removed figures, by label without the fig: prefix. `printed` holds what the pre-cut
+# Supplementary Information printed about a figure, as printed; each is recomputed from the data.
+figures:
+  cht-fields:
+    ras: ["1e4", "1e5", "1e6"]
+    partition_thickness: 0.1
+    streamline_grid: 260        # points per side of the grid the streamlines are traced on
+  cht-transient:
+    krs: ["1", "100"]
+    ras: ["1e4", "1e5", "1e6"]
+    partition_thickness: 0.1
+    prandtl: 0.71
+    titles:
+      "1": $k_r=1$ (transparent partition)
+      "100": $k_r=100$ (near-isothermal partition)
+    # The caption's conduction equilibria, and the text's start and peak values. The text's steady
+    # values 1.06, 1.75 and 2.79 are the grid-converged ones (1.059, 1.751, 2.794 in the pre-cut
+    # text). These m3 runs end at 1.059, 1.751 and 2.796, so the steady values are not checked here.
+    printed:
+      conduction_nu_kr1: "1.00"
+      conduction_nu_kr100: "1.11"
+      kr1_ra1e4: {nu_start: "1.00", nu_peak: "1.06"}
+      kr1_ra1e5: {nu_start: "1.00", nu_peak: "1.82"}
+      kr1_ra1e6: {nu_start: "1.00", nu_peak: "3.91"}
+      kr100_ra1e4: {nu_start: "1.00"}
+      kr100_ra1e5: {nu_start: "1.00"}
+      kr100_ra1e6: {nu_start: "1.00"}
+  engine-geom: {}
+  rbc-stats:
+    warmup: 0.15                # diffusion times discarded before the developed window
+    sokal_window: 6.0           # automatic windowing constant of the autocorrelation time
+    reliable_blocks: 50         # blocking levels with at least this many blocks bound the interval
+    acf_max_lag: 25.0           # turnovers of autocorrelation drawn in panel (b)
+    johnston_doering: {prefactor: 0.138, exponent: 0.285}
+    printed:                    # the caption: span, mean, interval, decorrelation, samples, DNS;
+      span_turnovers: "4.0e3"   # the text: the mean lies +2.9% above the DNS correlation
+      mean_nu: "14.04"
+      ci95: "0.025"
+      tau_dec_turnovers: "0.9"
+      independent_samples: "4e3"
+      johnston_doering_nu: "13.64"
+      johnston_doering_excess_percent: "2.9"
+  size-sweep:
+    tables: {weak: weak, strong: strong, ceiling: strongmax}
+    columns: {problem: Problem, gpus: GPUs, efficiency: Eff., speedup: Speedup,
+              total_dof: total DOF (M)}
+    problems: [3D cavity, 2D RBC, 2D CHT]
+    speedup_gpus: [2, 8]
+    styles:
+      3D cavity: {color: "#0072B2", marker: o}
+      2D RBC: {color: "#D55E00", marker: s}
+      2D CHT: {color: "#009E73", marker: "^"}
+    printed:                    # the arrays the published figure's script held
+      weak_efficiency:
+        3D cavity: ["1.00", "0.71", "0.67", "0.57"]
+        2D RBC: ["1.00", "0.63", "0.48", "0.38"]
+        2D CHT: ["1.00", "0.58", "0.53", "0.30"]
+      strong_speedup:
+        3D cavity: ["1.00", "1.23", "1.87", "2.42"]
+        2D RBC: ["1.00", "1.15", "1.31", "1.41"]
+        2D CHT: ["1.00", "1.14", "1.20", "1.31"]
+      problem_size:
+        3D cavity: ["53.7", "63.7"]
+        2D RBC: ["54.5", "102.0"]
+        2D CHT: ["54.1", "102.0"]
+      speedup_2_to_8:
+        3D cavity: ["2.42/1.23", "2.44/1.15"]
+        2D RBC: ["1.41/1.15", "1.71/1.00"]
+        2D CHT: ["1.31/1.14", "1.48/1.00"]
+
+hydra:
+  run:
+    dir: outputs/supplementary/${now:%Y-%m-%d_%H-%M-%S}

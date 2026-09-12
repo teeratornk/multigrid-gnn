@@ -1,0 +1,4 @@
+name: conjugate_cavity
+# pressure Laplacian on an n x n cavity
+params:
+  n: 64

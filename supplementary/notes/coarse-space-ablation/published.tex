@@ -1,0 +1,7 @@
+\paragraph{Coarse-space ablation.}
+A richer affine coarse space $\{1,x,y,z\}$, four degrees per rank, is fragile. On the same
+fixed $h_{128}$ cavity, deterministic and one repetition, it needs $283.5$ pressure
+iterations per outer step at two GPUs against block-Jacobi's $88.7$, the large slabs giving
+an ill-conditioned coarse operator, and only $100.7$ at eight against the indicator space's
+$110.1$. The one-degree-per-rank indicator space cuts iterations robustly at every rank
+count and at a fraction of the per-application cost.

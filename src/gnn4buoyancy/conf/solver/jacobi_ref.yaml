@@ -1,0 +1,9 @@
+name: jacobi_ref         # single-level reference: same CG, diagonal preconditioner
+                         # there to show what the hierarchy buys, not as a competitor
+max_levels: 1
+omega: 0.7
+n_pre: 2
+n_post: 2
+rtol: 1.0e-8
+max_iter: 2000
+use_sparse_mm: false

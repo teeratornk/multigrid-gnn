@@ -1,0 +1,360 @@
+{
+  "checks": {
+    "pcg_at_most_stationary": true,
+    "pcg_converged": true,
+    "stationary_converged": true
+  },
+  "config": {
+    "cases": {
+      "conjugate_cavity": {
+        "name": "conjugate_cavity",
+        "params": {
+          "n": 64
+        }
+      },
+      "engine_bore": {
+        "name": "engine_bore",
+        "params": {
+          "bore_frac": 0.42,
+          "contrast": 1000.0,
+          "liner_contrast": 300.0,
+          "liner_frac": 0.06,
+          "n": 64
+        }
+      },
+      "heat_sink": {
+        "name": "heat_sink",
+        "params": {
+          "contrast": 1000.0,
+          "fins": 4,
+          "n": 64
+        }
+      }
+    },
+    "deterministic": true,
+    "dtype": "float64",
+    "experiment": {
+      "cases": [
+        "conjugate_cavity",
+        "heat_sink",
+        "engine_bore"
+      ],
+      "divergence_ratio": 100000000.0,
+      "factor_window": 5,
+      "lanczos_steps": 300,
+      "name": "stationary_vs_pcg",
+      "omegas": [
+        1.0
+      ],
+      "optimal_omega": true,
+      "pcg_max_iter": 200,
+      "profiles": {
+        "paper": {
+          "device": "cuda",
+          "sizes": [
+            32,
+            64,
+            128
+          ]
+        },
+        "quick": {
+          "device": "cpu",
+          "sizes": [
+            16,
+            32
+          ]
+        }
+      },
+      "stationary_max_iter": 2000
+    },
+    "seed": 0,
+    "vcycle": {
+      "max_iter": 200,
+      "max_levels": 10,
+      "n_post": 2,
+      "n_pre": 2,
+      "name": "graph_mg",
+      "omega": 0.7,
+      "rtol": 1e-08,
+      "use_sparse_mm": false
+    }
+  },
+  "experiment": "stationary_vs_pcg",
+  "headline": {
+    "ratio_max": 13.95,
+    "ratio_min": 1.5
+  },
+  "profile": "paper",
+  "rows": [
+    {
+      "case": "conjugate_cavity",
+      "n": 32,
+      "omega": 1.0,
+      "omega_rule": "fixed",
+      "pcg_converged": true,
+      "pcg_iterations": 8,
+      "predicted_radius": 0.33961775864323285,
+      "ritz_max": 0.9995849172072528,
+      "ritz_min": 0.6603822413567672,
+      "stationary_converged": true,
+      "stationary_diverged": false,
+      "stationary_factor": 0.3363921310341023,
+      "stationary_iterations": 15
+    },
+    {
+      "case": "conjugate_cavity",
+      "n": 32,
+      "omega": 1.2048431137216777,
+      "omega_rule": "optimal",
+      "pcg_converged": true,
+      "pcg_iterations": 8,
+      "predicted_radius": 0.20434300407721218,
+      "ritz_max": 0.9995849172072528,
+      "ritz_min": 0.6603822413567672,
+      "stationary_converged": true,
+      "stationary_diverged": false,
+      "stationary_factor": 0.2028189935986661,
+      "stationary_iterations": 12
+    },
+    {
+      "case": "conjugate_cavity",
+      "n": 64,
+      "omega": 1.0,
+      "omega_rule": "fixed",
+      "pcg_converged": true,
+      "pcg_iterations": 10,
+      "predicted_radius": 0.46669419067042905,
+      "ritz_max": 0.9995970548350733,
+      "ritz_min": 0.533305809329571,
+      "stationary_converged": true,
+      "stationary_diverged": false,
+      "stationary_factor": 0.44929783795445194,
+      "stationary_iterations": 20
+    },
+    {
+      "case": "conjugate_cavity",
+      "n": 64,
+      "omega": 1.304714112521344,
+      "omega_rule": "optimal",
+      "pcg_converged": true,
+      "pcg_iterations": 10,
+      "predicted_radius": 0.3041883842780919,
+      "ritz_max": 0.9995970548350733,
+      "ritz_min": 0.533305809329571,
+      "stationary_converged": true,
+      "stationary_diverged": false,
+      "stationary_factor": 0.30232233633169037,
+      "stationary_iterations": 16
+    },
+    {
+      "case": "conjugate_cavity",
+      "n": 128,
+      "omega": 1.0,
+      "omega_rule": "fixed",
+      "pcg_converged": true,
+      "pcg_iterations": 10,
+      "predicted_radius": 0.45691554204028373,
+      "ritz_max": 0.9995026031046547,
+      "ritz_min": 0.5430844579597163,
+      "stationary_converged": true,
+      "stationary_diverged": false,
+      "stationary_factor": 0.4474743775423432,
+      "stationary_iterations": 19
+    },
+    {
+      "case": "conjugate_cavity",
+      "n": 128,
+      "omega": 1.2965232565998694,
+      "omega_rule": "optimal",
+      "pcg_converged": true,
+      "pcg_iterations": 10,
+      "predicted_radius": 0.2958783699572938,
+      "ritz_max": 0.9995026031046547,
+      "ritz_min": 0.5430844579597163,
+      "stationary_converged": true,
+      "stationary_diverged": false,
+      "stationary_factor": 0.29402434767257174,
+      "stationary_iterations": 15
+    },
+    {
+      "case": "heat_sink",
+      "n": 32,
+      "omega": 1.0,
+      "omega_rule": "fixed",
+      "pcg_converged": true,
+      "pcg_iterations": 16,
+      "predicted_radius": 0.8902498827532834,
+      "ritz_max": 0.9997183075024231,
+      "ritz_min": 0.1097501172467166,
+      "stationary_converged": true,
+      "stationary_diverged": false,
+      "stationary_factor": 0.8902505784953041,
+      "stationary_iterations": 123
+    },
+    {
+      "case": "heat_sink",
+      "n": 32,
+      "omega": 1.8026650920256853,
+      "omega_rule": "optimal",
+      "pcg_converged": true,
+      "pcg_iterations": 16,
+      "predicted_radius": 0.8021572947936179,
+      "ritz_max": 0.9997183075024231,
+      "ritz_min": 0.1097501172467166,
+      "stationary_converged": true,
+      "stationary_diverged": false,
+      "stationary_factor": 0.8017774870049631,
+      "stationary_iterations": 83
+    },
+    {
+      "case": "heat_sink",
+      "n": 64,
+      "omega": 1.0,
+      "omega_rule": "fixed",
+      "pcg_converged": true,
+      "pcg_iterations": 20,
+      "predicted_radius": 0.9467688811846794,
+      "ritz_max": 0.9997761864542708,
+      "ritz_min": 0.05323111881532056,
+      "stationary_converged": true,
+      "stationary_diverged": false,
+      "stationary_factor": 0.946768569671323,
+      "stationary_iterations": 279
+    },
+    {
+      "case": "heat_sink",
+      "n": 64,
+      "omega": 1.8993220559737325,
+      "omega_rule": "optimal",
+      "pcg_converged": true,
+      "pcg_iterations": 20,
+      "predicted_radius": 0.8988969619699034,
+      "ritz_max": 0.9997761864542708,
+      "ritz_min": 0.05323111881532056,
+      "stationary_converged": true,
+      "stationary_diverged": false,
+      "stationary_factor": 0.8983094701479779,
+      "stationary_iterations": 172
+    },
+    {
+      "case": "heat_sink",
+      "n": 128,
+      "omega": 1.0,
+      "omega_rule": "fixed",
+      "pcg_converged": true,
+      "pcg_iterations": 17,
+      "predicted_radius": 0.8057570458261618,
+      "ritz_max": 0.99976477623337,
+      "ritz_min": 0.19424295417383813,
+      "stationary_converged": true,
+      "stationary_diverged": false,
+      "stationary_factor": 0.8057599302698412,
+      "stationary_iterations": 77
+    },
+    {
+      "case": "heat_sink",
+      "n": 128,
+      "omega": 1.6750310312630168,
+      "omega_rule": "optimal",
+      "pcg_converged": true,
+      "pcg_iterations": 17,
+      "predicted_radius": 0.674637024154621,
+      "ritz_max": 0.99976477623337,
+      "ritz_min": 0.19424295417383813,
+      "stationary_converged": true,
+      "stationary_diverged": false,
+      "stationary_factor": 0.673293393533002,
+      "stationary_iterations": 47
+    },
+    {
+      "case": "engine_bore",
+      "n": 32,
+      "omega": 1.0,
+      "omega_rule": "fixed",
+      "pcg_converged": true,
+      "pcg_iterations": 10,
+      "predicted_radius": 0.49916704107741683,
+      "ritz_max": 0.9997048548838059,
+      "ritz_min": 0.5008329589225832,
+      "stationary_converged": true,
+      "stationary_diverged": false,
+      "stationary_factor": 0.4992572243680644,
+      "stationary_iterations": 24
+    },
+    {
+      "case": "engine_bore",
+      "n": 32,
+      "omega": 1.332855447958778,
+      "omega_rule": "optimal",
+      "pcg_converged": true,
+      "pcg_iterations": 10,
+      "predicted_radius": 0.33246206218272034,
+      "ritz_max": 0.9997048548838059,
+      "ritz_min": 0.5008329589225832,
+      "stationary_converged": true,
+      "stationary_diverged": false,
+      "stationary_factor": 0.3312310834821696,
+      "stationary_iterations": 17
+    },
+    {
+      "case": "engine_bore",
+      "n": 64,
+      "omega": 1.0,
+      "omega_rule": "fixed",
+      "pcg_converged": true,
+      "pcg_iterations": 11,
+      "predicted_radius": 0.552413266604597,
+      "ritz_max": 0.9996701711526675,
+      "ritz_min": 0.447586733395403,
+      "stationary_converged": true,
+      "stationary_diverged": false,
+      "stationary_factor": 0.48292925436700607,
+      "stationary_iterations": 22
+    },
+    {
+      "case": "engine_bore",
+      "n": 64,
+      "omega": 1.3819246560267975,
+      "omega_rule": "optimal",
+      "pcg_converged": true,
+      "pcg_iterations": 11,
+      "predicted_radius": 0.38146885741039993,
+      "ritz_max": 0.9996701711526675,
+      "ritz_min": 0.447586733395403,
+      "stationary_converged": true,
+      "stationary_diverged": false,
+      "stationary_factor": 0.37975851995372895,
+      "stationary_iterations": 19
+    },
+    {
+      "case": "engine_bore",
+      "n": 128,
+      "omega": 1.0,
+      "omega_rule": "fixed",
+      "pcg_converged": true,
+      "pcg_iterations": 12,
+      "predicted_radius": 0.5615004834464037,
+      "ritz_max": 0.9996616462153388,
+      "ritz_min": 0.43849951655359626,
+      "stationary_converged": true,
+      "stationary_diverged": false,
+      "stationary_factor": 0.5619559863179483,
+      "stationary_iterations": 29
+    },
+    {
+      "case": "engine_bore",
+      "n": 128,
+      "omega": 1.3906647264409087,
+      "omega_rule": "optimal",
+      "pcg_converged": true,
+      "pcg_iterations": 12,
+      "predicted_radius": 0.3901941897675225,
+      "ritz_max": 0.9996616462153388,
+      "ritz_min": 0.43849951655359626,
+      "stationary_converged": true,
+      "stationary_diverged": false,
+      "stationary_factor": 0.38845016808371363,
+      "stationary_iterations": 20
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+The transient Rayleigh--B\'enard cell has two tables: weak scaling at the single-GPU memory
+ceiling (\Cref{tab:weak-transient}) and the fixed-problem A/B in which the two-level coarse
+correction recovers positive strong scaling (\Cref{tab:rbcstrong2level}, first block). Only
+the two-level preconditioner appears here, for the reason given in
+\Cref{sec:si-scaling-protocol}. On a smaller fixed $h_{724}$ problem
+($1.05\times10^{6}$ pressure DOF, $1.36\times10^{7}$ total, which one device runs whole)
+block-Jacobi behaves the same way. It runs at $349.1$~ms/step on one GPU and $958.4$,
+$862.9$ and $915.1$~ms on two, four and eight, a speedup of $0.36$ to $0.40\times$ and a
+parallel efficiency falling from $0.18$ to $0.05$. The $y$-slab decomposition cuts the
+vertical pressure coupling, which aggravates the iteration growth.

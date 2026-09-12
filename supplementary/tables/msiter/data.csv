@@ -1,0 +1,19 @@
+group,Ra,mesh,CNN,GNN,FEniCSx,OF12
+Two-dimensional benchmark,10^4,h_64,157.4,11.6,80.5,3.8
+Two-dimensional benchmark,10^4,h_128,138.9,12.1,304.6,17.4
+Two-dimensional benchmark,10^4,h_256,163.6,32.5,1160,78.2
+Two-dimensional benchmark,10^5,h_64,173.4,11.9,80.0,4.0
+Two-dimensional benchmark,10^5,h_128,183.6,12.8,306.9,15.9
+Two-dimensional benchmark,10^5,h_256,168.8,17.6,1182,75.3
+Two-dimensional benchmark,10^6,h_64,174.7,13.0,80.0,4.3
+Two-dimensional benchmark,10^6,h_128,183.1,14.0,310.0,16.6
+Two-dimensional benchmark,10^6,h_256,168.6,17.6,1184,70.9
+Three-dimensional benchmark,10^3,h_16,408.1,22.7,578.5,4.7
+Three-dimensional benchmark,10^3,h_32,461.5,31.7,5228,39.0
+Three-dimensional benchmark,10^3,h_64,458.2,164.6,44084,444.3
+Three-dimensional benchmark,10^4,h_16,418.9,19.1,604.6,4.8
+Three-dimensional benchmark,10^4,h_32,463.6,32.1,5184,38.3
+Three-dimensional benchmark,10^4,h_64,498.7,164.6,44698,428.3
+Three-dimensional benchmark,10^5,h_16,434.6,19.8,594.6,5.3
+Three-dimensional benchmark,10^5,h_32,462.7,32.8,5281,38.0
+Three-dimensional benchmark,10^5,h_64,499.2,167.9,44476,446.8

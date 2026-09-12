@@ -1,0 +1,36 @@
+\begin{table}[ht]
+\centering
+\caption{\textbf{Robustness probes for the CNN velocity and pressure floor}
+(2D manufactured solution, \Cref{eq:mms-2d}). Each row changes one thing in the
+CNN--SIMPLE run and reports what moved.}
+\label{tab:cnn-probes}
+\small
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.30\textwidth} >{\raggedright\arraybackslash}p{0.38\textwidth} >{\raggedright\arraybackslash}p{0.25\textwidth}@{}}
+\toprule
+intervention & result & conclusion \\
+\midrule
+pressure inner-solver budget raised $50\times$ ($100\to5000$ iterations per
+SIMPLE step) & bit-identical SIMPLE iterates and identical $L^{2}$ at
+convergence & the pressure correction is not iteration-limited \\
+\addlinespace
+momentum under-relaxation swept over $\alpha_{U}\in\{0.3,\ 0.5,\ 1.0\}$ &
+bit-identical $L^{2}_{u}$; identical $y$-ramp coefficient $-1.1586$ & the
+SIMPLE coupling is not the floor \\
+\addlinespace
+homogeneous-Dirichlet variant of the manufactured solution ($u=v=0$ on all
+four walls) & plateau at $\|e_{u}\|_{L^{2}}=1.54\times10^{-3}$ (vs.\
+$1.62\times10^{-3}$ for \Cref{eq:mms-2d}); same $y$-ramp coefficient $-1.15$ &
+the non-zero tangential velocity on the top and bottom walls is not the
+mechanism \\
+\addlinespace
+$L^{2}$ restricted to the strict interior (one or two cells of boundary band
+excluded) & within $0.5\%$ of the full-domain $L^{2}$ & the floor is global,
+not boundary-localized \\
+\addlinespace
+discrete divergence applied to the exact manufactured velocity &
+$\|\nabla_{h}\cdot\bm{u}_{\text{exact}}\|\sim10^{-14}$, machine epsilon &
+the divergence stencil is consistent; the error enters through the momentum
+equation, not at iteration 0 \\
+\bottomrule
+\end{tabular}
+\end{table}

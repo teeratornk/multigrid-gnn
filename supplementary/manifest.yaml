@@ -1,0 +1,115 @@
+# Written by the export in the paper's source repository. tests/test_supplementary.py
+# recomputes every digest: sha256 of the bytes, or of the arrays for a .npz.
+files:
+  figures/cht-fields/data/field_ra1e4.npz:
+    what: 'GNN conjugate cavity at steady state, k_r=1, T_p=0.1, Ra=1e4, mesh m4: P2 node coordinates,
+      velocity components and temperature'
+    digest: 71255a5818c412fe1335325dc444fbc0c0fa0a75f9a53464d4d423d6142c28b0
+  figures/cht-fields/data/field_ra1e5.npz:
+    what: 'GNN conjugate cavity at steady state, k_r=1, T_p=0.1, Ra=1e5, mesh m4: P2 node coordinates,
+      velocity components and temperature'
+    digest: 97ce617ab2b19c50cdbf6446b4c0372489066df5ce0a9013c9af0430503c32f3
+  figures/cht-fields/data/field_ra1e6.npz:
+    what: 'GNN conjugate cavity at steady state, k_r=1, T_p=0.1, Ra=1e6, mesh m4: P2 node coordinates,
+      velocity components and temperature'
+    digest: 54678539996aadb557d4fadaf8e9308eb52a40eebccda66c04e118fd445669f9
+  figures/cht-fields/published.pdf:
+    what: Supplementary figure fig:cht-fields as printed before the cut
+    digest: e45cd030ecd2954659d341d648641340f602f388d926047809fab47317a5ba1e
+  figures/cht-transient/data/nu_kr100_ra1e4.csv:
+    what: 'GNN conjugate cavity from the conduction start, k_r=100, Ra=1e4, T_p=0.1, mesh m3: diffusion
+      time t and hot-wall Nu, as logged'
+    digest: ac164f02592e4dd91d918bf770cedd64daa1cba3317e1dc5ae37fcd1e10274f4
+  figures/cht-transient/data/nu_kr100_ra1e5.csv:
+    what: 'GNN conjugate cavity from the conduction start, k_r=100, Ra=1e5, T_p=0.1, mesh m3: diffusion
+      time t and hot-wall Nu, as logged'
+    digest: 4b83be2762df51572b044cbd21de692de6abd2715e9850c8cf233d88716eba9f
+  figures/cht-transient/data/nu_kr100_ra1e6.csv:
+    what: 'GNN conjugate cavity from the conduction start, k_r=100, Ra=1e6, T_p=0.1, mesh m3: diffusion
+      time t and hot-wall Nu, as logged'
+    digest: f8b4a229351d7dd28d34e32c5cd2fe052dc49f8ba472ebb6d3c0d38a98db560f
+  figures/cht-transient/data/nu_kr1_ra1e4.csv:
+    what: 'GNN conjugate cavity from the conduction start, k_r=1, Ra=1e4, T_p=0.1, mesh m3: diffusion
+      time t and hot-wall Nu, as logged'
+    digest: ae508a58384f98e5f8ec43cda981cb5b55bf3450062cea71b1ef9fdb62c8018c
+  figures/cht-transient/data/nu_kr1_ra1e5.csv:
+    what: 'GNN conjugate cavity from the conduction start, k_r=1, Ra=1e5, T_p=0.1, mesh m3: diffusion
+      time t and hot-wall Nu, as logged'
+    digest: c6ad8f3a295ec6c1fd5b658293ae57cc0a830c53233513df5d250c93c82f32dd
+  figures/cht-transient/data/nu_kr1_ra1e6.csv:
+    what: 'GNN conjugate cavity from the conduction start, k_r=1, Ra=1e6, T_p=0.1, mesh m3: diffusion
+      time t and hot-wall Nu, as logged'
+    digest: 0b210287a1e2e92dc8809bdce38ce6ebcba28c7f5a57339ba48b086b365de94a
+  figures/cht-transient/published.pdf:
+    what: Supplementary figure fig:cht-transient as printed before the cut
+    digest: 9d2edaa4ca257c6007560bdc69f0693943d32d39f7d46bf73cd3cd278f0abe13
+  figures/engine-geom/published.pdf:
+    what: Supplementary figure fig:engine-geom as printed before the cut
+    digest: ff8b0fd661d9b8b49f95d2e60cfada10f94b91fac3dcac878a555cf350562f99
+  figures/rbc-stats/data/nu_trace.npz:
+    what: 'GNN Rayleigh-Benard cell, Gamma=2, Ra=1e7, Pr=0.71, h128: diffusion time t and the bottom and
+      top plate Nu'
+    digest: 7e6099b0259519f55ef32b78caf1d0f1c98b3f8bde0fa9353429938b642b076a
+  figures/rbc-stats/published.pdf:
+    what: Supplementary figure fig:rbc-stats as printed before the cut
+    digest: c1e1f13be1a6a931caf5b419b08a31a7a9c142db7bd5360004a8ff84ca7f61ab
+  figures/size-sweep/published.pdf:
+    what: Supplementary figure fig:size-sweep as printed before the cut
+    digest: c185c82584b2d6fc33519c782abc30acd85de2fe75eeedcd4d4de8e8bceb1de5
+  notes/cnn-ramp-coefficients/published.tex:
+    what: Paragraph of the pre-cut SI with the linear pressure ramp of the CNN error
+    digest: 9a6bad652e9e7cfeac9febbae96b16c71aae2b97d56a4cc9cbaa9a3570b6dd75
+  notes/coarse-space-ablation/published.tex:
+    what: Paragraph of the pre-cut SI with the affine coarse-space ablation on the 3D cavity
+    digest: 74fdeaf116d2311f4e9e248065c1e53030182de189775fb44c3ad555c84c4d25
+  notes/engine-matched-tolerance/published.tex:
+    what: Paragraph of the pre-cut SI with the engine throughput ratios at a matched tolerance of 1e-7
+    digest: 3824e754c7103e554505f7333242c8b8c758fa1764a8acfac315ae378215a605
+  notes/mms-modal-coefficients/published.tex:
+    what: Paragraph of the pre-cut SI with the modal decomposition of the GNN pressure error
+    digest: d35b878e413afd87e1683e63385ac9e92ee982e703224868acadec0c2b768bcf
+  notes/partition-thickness/published.tex:
+    what: Paragraph of the pre-cut SI with the conjugate cavity Nusselt numbers at two partition thicknesses
+    digest: de8ea11dd6258c592f89a732238f2030622b3b913e70e32dd79487048f25a47a
+  notes/rbc-block-jacobi-h724/published.tex:
+    what: Paragraph of the pre-cut SI with block-Jacobi strong scaling of the unsteady Rayleigh-Benard
+      cell on h724
+    digest: 319356710bef62566d4c33dc05527b4776fee23c89c88210c692f7305dc5f009
+  notes/scaling-captions/published.tex:
+    what: Pre-cut captions of three kept scaling tables, with results the cut removed from them
+    digest: 073f8d4d1b56efcde97979756ac9a1b12763a5b0a8aa6268dae1319d7db82788
+  si_before_cut.pdf:
+    what: 'Supplementary Information before the cut: pages 41 to 97 of the manuscript, rebuilt from its
+      sources. Changed: site scheduler flags removed from the scheduler row of the hardware and software
+      table'
+    digest: 22e9c398dc0fc870f7110b1c8c47ea026ac071d0350f08cfe87b50a2f1c5a297
+  tables/cnn-probes/published.tex:
+    what: Supplementary table tab:cnn-probes as printed before the cut
+    digest: c5f78e07123948cf61ab2e366c1eda6c8ea8bbe759131a3fae0680a850ffe9eb
+  tables/engine-mesh/published.tex:
+    what: Supplementary table tab:engine-mesh as printed before the cut
+    digest: aa280e4cbe77a4e8e92980800d374cf2ae190eea3f6c58226d96a9cba486914b
+  tables/mgsolver/published.tex:
+    what: Supplementary table tab:mgsolver as printed before the cut
+    digest: 62a812400d4d9cfc21b045a3a75232d6209179d7ad7a11b07786cb2d735168aa
+  tables/mms-distributed/published.tex:
+    what: Supplementary table tab:mms-distributed as printed before the cut
+    digest: 3255eb072710506f2bcd1ae7b0baafb946006ccd5e5a4daa54bacde58340ecc7
+  tables/msiter/published.tex:
+    what: Supplementary table tab:msiter as printed before the cut
+    digest: 2f4913e5304e11596bfe10809ece01ebc78cfaa614d275b314ad435e2e1abcc2
+  tables/strong/published.tex:
+    what: Supplementary table tab:strong as printed before the cut
+    digest: 331f530039750f4142e571a61637a414e3ec1491fd0763efc7932454561d602a
+  tables/strongmax/published.tex:
+    what: Supplementary table tab:strongmax as printed before the cut
+    digest: a1e612ac0e4bd6c5e2c51e9d27eb508ec81a4059cc489771cc2cd387cab2863e
+  tables/strongscale-n161/published.tex:
+    what: Supplementary table tab:strongscale-n161 as printed before the cut
+    digest: c931103ec87b7d753982205f8f3f87b247aa28d87c54b5ba12c361505d5c33a6
+  tables/weak-transient/published.tex:
+    what: Supplementary table tab:weak-transient as printed before the cut
+    digest: c9635192feb91ace80505c9e991a48afab98a2bab7296130a6f0e95cb6be1a97
+  tables/weak/published.tex:
+    what: Supplementary table tab:weak as printed before the cut
+    digest: e6a6141b255dc8b2e767a5d2d8beb1ac3558173a15b153c054baa2209ed98340

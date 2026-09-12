@@ -1,0 +1,46 @@
+\label{tab:strongscale}
+\caption{\textbf{Strong scaling of the distributed GNN solver.}
+Fixed 3D cavity, $\mathrm{Ra}=10^{6}$, $h_{128}$ ($\approx\!1.57\times10^{6}$ pressure DOFs
+total), across one to eight GPUs; ``wall-clock speedup'' is the whole-SIMPLE-step speedup of
+\Cref{sec:si-scaling-protocol}. The kernels strong-scale sub-linearly (block-Jacobi ms/PCG-it
+$6.29\to3.09$, $2.04\times$ on eight GPUs) while block-Jacobi's pressure iterations grow
+steeply with rank ($29.0\to170.6$, a factor $5.9$), so the whole-step speedup saturates,
+peaking near $1.6\times$ at four GPUs and regressing at eight. The Nicolaides deflation cuts
+iterations $29$--$35\%$ at $\approx\!10\%$ extra per-iteration cost and leads on iterations,
+absolute wall and speedup at every multi-GPU count (eight-GPU wall $750$ against $829$~ms). It
+turns over at eight as well ($1.92\times$ at four, $1.72\times$ at eight): the deflation
+raises the curve but does not remove the saturation, which is set by iteration growth this
+fixed $1.57\times10^{6}$-DOF problem cannot amortize past four ranks.}
+
+\label{tab:weakscale}
+\caption{\textbf{Weak scaling of the distributed GNN pressure solve.}
+3D cavity, $\mathrm{Ra}=10^{6}$, $\approx\!1.5\times10^{6}$ pressure DOFs per GPU
+(GPU-representative load; protocol of \Cref{sec:si-scaling-protocol}). ``bj eff'' is
+block-Jacobi's weak efficiency on ms/PCG-it against one GPU (np1\,/\,npX); ``it/o'' is
+it/outer. The one-degree-per-rank
+Nicolaides deflation cuts pressure iterations $27$--$35\%$ (growing with GPU count) at
+$\approx\!10\%$ extra per-iteration cost, a net pressure-solve speedup of $22$--$29\%$
+(``Nic.\ net''). The per-GPU load follows the admissible cubic grids, so it is not constant
+($1.31$--$1.57$M) and efficiency is reported both raw and per DOF (``bj eff/DOF''). The two
+differ most at four GPUs, which carries $17\%$ less work per GPU than the baseline; per DOF
+the curve is monotone. A separate
+five-repetition sweep at the lighter $2\times10^{5}$-DOF/GPU load gives $0.65$
+($4.5\!\to\!6.9$~ms/PCG-it), the fixed per-iteration communication being less amortized
+there.}
+
+\label{tab:weak-ceiling}
+\caption{\textbf{Weak scaling of the two three-dimensional conjugate problems at the
+single-GPU memory ceiling.} Two-level preconditioner, conjugate rotational-IPCS + RK3--CN,
+$x$-slab. Weak efficiency is referenced to two GPUs, with the value against one GPU in the
+last column (\Cref{sec:si-scaling-protocol}).
+\emph{Heat sink:} fixed $\approx\!1.5\times10^{7}$ total DOF/GPU, the largest problem one H200
+holds \emph{for this operator set}, the mesh growing with NPROC to $1.13\times10^{8}$ DOF on
+eight GPUs; $\mathrm{Ra}=10^{6}$, 3000-step timing. The full-GPU load makes the one-to-two-GPU onset
+mild ($1.32\times$, against $3.45\times$ at a light $2\times10^{6}$~DOF/GPU load). Its
+eight-GPU weak efficiency at $1.1\times10^{8}$ DOF is $0.74$ against two GPUs and $0.56$
+against one; the residual loss is the two-level global coarse correction growing with the
+total problem.
+\emph{Engine:} fixed $\approx\!6\times10^{7}$~DOF/GPU ($104$~GB, $73\%$ of one H200), grown
+with NPROC; $\mathrm{Ra}=10^{5}$, median of three runs. It weak-scales comparably to the
+fluid-filled heat sink; a run at a lighter $1.6\times10^{7}$~DOF/GPU load weak-scales far
+worse (see text).}

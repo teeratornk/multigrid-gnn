@@ -1,0 +1,6 @@
+quantity,value,unit
+mesh,h_128,
+pressure iterations per outer step with the affine coarse space on two GPUs,283.5,
+pressure iterations per outer step with block-Jacobi on two GPUs,88.7,
+pressure iterations per outer step with the affine coarse space on eight GPUs,100.7,
+pressure iterations per outer step with the indicator coarse space on eight GPUs,110.1,

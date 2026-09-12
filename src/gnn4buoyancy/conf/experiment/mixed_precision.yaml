@@ -1,0 +1,20 @@
+name: mixed_precision
+# fp64 CG preconditioned by the fp64 cycle; by the same hierarchy cast to fp32 (hierarchy.py
+# cast_levels, so precision is the only change); and the whole solve in fp32.
+profiles:
+  quick: {device: cpu, sizes: [16, 32]}
+  paper: {device: cuda, sizes: [32, 64, 128]}
+cases: [conjugate_cavity, heat_sink, engine_bore]
+inner_dtype: float32
+extra_range: [0, 2]   # claim: mixed precision needs the fp64 count plus 0 to 2 iterations
+# Tolerances come from the spread measured between reruns, 1 and 8 threads, CPU and CUDA,
+# and deterministic and nondeterministic CUDA kernels. Each comment gives that spread.
+regression:
+  fp64_iterations: {rule: abs, tol: 1}    # spread 0; one iteration of round-off allowance
+  mixed_iterations: {rule: abs, tol: 1}   # spread 0; one iteration of round-off allowance
+  mixed_extra: {rule: abs, tol: 1}        # spread 0; one iteration of round-off allowance
+  mixed_extra_min: {rule: abs, tol: 1}    # as mixed_extra
+  mixed_extra_max: {rule: abs, tol: 1}    # as mixed_extra
+  mixed_solution_diff: {rule: decades, tol: 1.0, floor: 1.0e-9}   # rtol-level, 4.4e-15 to 6.0e-9; spread 0.96 decades under the floor and 0.165 above it (CPU vs CUDA), x6 in decades
+  fp32_residual: {rule: decades, tol: 1.7, floor: 1.0e-12}       # where fp32 stalls, spread 0.164 decades CPU vs CUDA, x10 and rounded up
+  fp32_residual_min: {rule: decades, tol: 1.7, floor: 1.0e-12}   # as fp32_residual

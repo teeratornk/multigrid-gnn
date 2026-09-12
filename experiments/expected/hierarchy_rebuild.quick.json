@@ -1,0 +1,450 @@
+{
+  "checks": {
+    "all_converged": true,
+    "other_seeds_drift": true,
+    "same_seed_bitwise": true
+  },
+  "config": {
+    "cases": {
+      "conjugate_cavity": {
+        "name": "conjugate_cavity",
+        "params": {
+          "n": 64
+        }
+      },
+      "engine_bore": {
+        "name": "engine_bore",
+        "params": {
+          "bore_frac": 0.42,
+          "contrast": 1000.0,
+          "liner_contrast": 300.0,
+          "liner_frac": 0.06,
+          "n": 64
+        }
+      },
+      "heat_sink": {
+        "name": "heat_sink",
+        "params": {
+          "contrast": 1000.0,
+          "fins": 4,
+          "n": 64
+        }
+      }
+    },
+    "deterministic": true,
+    "dtype": "float64",
+    "experiment": {
+      "cases": [
+        "conjugate_cavity",
+        "heat_sink",
+        "engine_bore"
+      ],
+      "name": "hierarchy_rebuild",
+      "pcg_max_iter": 200,
+      "profiles": {
+        "paper": {
+          "device": "cuda",
+          "sizes": [
+            32,
+            64,
+            128
+          ]
+        },
+        "quick": {
+          "device": "cpu",
+          "sizes": [
+            16,
+            32
+          ]
+        }
+      },
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "seed": 0,
+    "vcycle": {
+      "max_iter": 200,
+      "max_levels": 10,
+      "n_post": 2,
+      "n_pre": 2,
+      "name": "graph_mg",
+      "omega": 0.7,
+      "rtol": 1e-08,
+      "use_sparse_mm": false
+    }
+  },
+  "experiment": "hierarchy_rebuild",
+  "headline": {
+    "drift_max": 0.008131520043924978,
+    "drift_min": 0.0002332579896952971,
+    "solution_diff_max": 1.2683804684406874e-10
+  },
+  "profile": "quick",
+  "rows": [
+    {
+      "case": "conjugate_cavity",
+      "converged": true,
+      "drift": 0.0,
+      "iterations": 8,
+      "levels": 3,
+      "n": 16,
+      "same_seed_bitwise": true,
+      "same_seed_drift": 0.0,
+      "seed": 0,
+      "solution_diff": 0.0
+    },
+    {
+      "case": "conjugate_cavity",
+      "converged": true,
+      "drift": 0.0006313950856279931,
+      "iterations": 8,
+      "levels": 3,
+      "n": 16,
+      "same_seed_bitwise": true,
+      "same_seed_drift": 0.0,
+      "seed": 1,
+      "solution_diff": 1.5419854652084318e-12
+    },
+    {
+      "case": "conjugate_cavity",
+      "converged": true,
+      "drift": 0.0009338091715810412,
+      "iterations": 8,
+      "levels": 3,
+      "n": 16,
+      "same_seed_bitwise": true,
+      "same_seed_drift": 0.0,
+      "seed": 2,
+      "solution_diff": 2.94471324723316e-12
+    },
+    {
+      "case": "conjugate_cavity",
+      "converged": true,
+      "drift": 0.0008347926700150125,
+      "iterations": 8,
+      "levels": 3,
+      "n": 16,
+      "same_seed_bitwise": true,
+      "same_seed_drift": 0.0,
+      "seed": 3,
+      "solution_diff": 2.548989921035592e-12
+    },
+    {
+      "case": "conjugate_cavity",
+      "converged": true,
+      "drift": 0.0004851458707916114,
+      "iterations": 8,
+      "levels": 3,
+      "n": 16,
+      "same_seed_bitwise": true,
+      "same_seed_drift": 0.0,
+      "seed": 4,
+      "solution_diff": 1.193970184831716e-12
+    },
+    {
+      "case": "conjugate_cavity",
+      "converged": true,
+      "drift": 0.0,
+      "iterations": 8,
+      "levels": 4,
+      "n": 32,
+      "same_seed_bitwise": true,
+      "same_seed_drift": 0.0,
+      "seed": 0,
+      "solution_diff": 0.0
+    },
+    {
+      "case": "conjugate_cavity",
+      "converged": true,
+      "drift": 0.003521526101931545,
+      "iterations": 8,
+      "levels": 4,
+      "n": 32,
+      "same_seed_bitwise": true,
+      "same_seed_drift": 0.0,
+      "seed": 1,
+      "solution_diff": 1.2683804684406874e-10
+    },
+    {
+      "case": "conjugate_cavity",
+      "converged": true,
+      "drift": 0.0009099498319284368,
+      "iterations": 8,
+      "levels": 4,
+      "n": 32,
+      "same_seed_bitwise": true,
+      "same_seed_drift": 0.0,
+      "seed": 2,
+      "solution_diff": 4.121154157736175e-11
+    },
+    {
+      "case": "conjugate_cavity",
+      "converged": true,
+      "drift": 0.00114814178517601,
+      "iterations": 8,
+      "levels": 4,
+      "n": 32,
+      "same_seed_bitwise": true,
+      "same_seed_drift": 0.0,
+      "seed": 3,
+      "solution_diff": 2.9521400671096425e-11
+    },
+    {
+      "case": "conjugate_cavity",
+      "converged": true,
+      "drift": 0.0010862401411856324,
+      "iterations": 8,
+      "levels": 4,
+      "n": 32,
+      "same_seed_bitwise": true,
+      "same_seed_drift": 0.0,
+      "seed": 4,
+      "solution_diff": 4.8100580661051163e-11
+    },
+    {
+      "case": "heat_sink",
+      "converged": true,
+      "drift": 0.0,
+      "iterations": 18,
+      "levels": 3,
+      "n": 16,
+      "same_seed_bitwise": true,
+      "same_seed_drift": 0.0,
+      "seed": 0,
+      "solution_diff": 0.0
+    },
+    {
+      "case": "heat_sink",
+      "converged": true,
+      "drift": 0.0002332579896952971,
+      "iterations": 18,
+      "levels": 3,
+      "n": 16,
+      "same_seed_bitwise": true,
+      "same_seed_drift": 0.0,
+      "seed": 1,
+      "solution_diff": 2.1263892195784924e-12
+    },
+    {
+      "case": "heat_sink",
+      "converged": true,
+      "drift": 0.0007046171597210786,
+      "iterations": 18,
+      "levels": 3,
+      "n": 16,
+      "same_seed_bitwise": true,
+      "same_seed_drift": 0.0,
+      "seed": 2,
+      "solution_diff": 6.417938037066523e-12
+    },
+    {
+      "case": "heat_sink",
+      "converged": true,
+      "drift": 0.0006835590791600894,
+      "iterations": 18,
+      "levels": 3,
+      "n": 16,
+      "same_seed_bitwise": true,
+      "same_seed_drift": 0.0,
+      "seed": 3,
+      "solution_diff": 6.276051922925403e-12
+    },
+    {
+      "case": "heat_sink",
+      "converged": true,
+      "drift": 0.0007967288847950742,
+      "iterations": 18,
+      "levels": 3,
+      "n": 16,
+      "same_seed_bitwise": true,
+      "same_seed_drift": 0.0,
+      "seed": 4,
+      "solution_diff": 7.292552559888936e-12
+    },
+    {
+      "case": "heat_sink",
+      "converged": true,
+      "drift": 0.0,
+      "iterations": 16,
+      "levels": 4,
+      "n": 32,
+      "same_seed_bitwise": true,
+      "same_seed_drift": 0.0,
+      "seed": 0,
+      "solution_diff": 0.0
+    },
+    {
+      "case": "heat_sink",
+      "converged": true,
+      "drift": 0.008131520043924978,
+      "iterations": 16,
+      "levels": 4,
+      "n": 32,
+      "same_seed_bitwise": true,
+      "same_seed_drift": 0.0,
+      "seed": 1,
+      "solution_diff": 5.5254062372263544e-11
+    },
+    {
+      "case": "heat_sink",
+      "converged": true,
+      "drift": 0.000985425795066594,
+      "iterations": 16,
+      "levels": 4,
+      "n": 32,
+      "same_seed_bitwise": true,
+      "same_seed_drift": 0.0,
+      "seed": 2,
+      "solution_diff": 1.3611480223834298e-11
+    },
+    {
+      "case": "heat_sink",
+      "converged": true,
+      "drift": 0.0006065208813080984,
+      "iterations": 16,
+      "levels": 4,
+      "n": 32,
+      "same_seed_bitwise": true,
+      "same_seed_drift": 0.0,
+      "seed": 3,
+      "solution_diff": 3.810530201471816e-12
+    },
+    {
+      "case": "heat_sink",
+      "converged": true,
+      "drift": 0.0028858826331716976,
+      "iterations": 16,
+      "levels": 4,
+      "n": 32,
+      "same_seed_bitwise": true,
+      "same_seed_drift": 0.0,
+      "seed": 4,
+      "solution_diff": 1.694903199841288e-11
+    },
+    {
+      "case": "engine_bore",
+      "converged": true,
+      "drift": 0.0,
+      "iterations": 8,
+      "levels": 3,
+      "n": 16,
+      "same_seed_bitwise": true,
+      "same_seed_drift": 0.0,
+      "seed": 0,
+      "solution_diff": 0.0
+    },
+    {
+      "case": "engine_bore",
+      "converged": true,
+      "drift": 0.0016250771357259094,
+      "iterations": 8,
+      "levels": 3,
+      "n": 16,
+      "same_seed_bitwise": true,
+      "same_seed_drift": 0.0,
+      "seed": 1,
+      "solution_diff": 1.7423892643702543e-12
+    },
+    {
+      "case": "engine_bore",
+      "converged": true,
+      "drift": 0.003065699638073293,
+      "iterations": 8,
+      "levels": 3,
+      "n": 16,
+      "same_seed_bitwise": true,
+      "same_seed_drift": 0.0,
+      "seed": 2,
+      "solution_diff": 3.2625541290788438e-12
+    },
+    {
+      "case": "engine_bore",
+      "converged": true,
+      "drift": 0.004104009857265912,
+      "iterations": 8,
+      "levels": 3,
+      "n": 16,
+      "same_seed_bitwise": true,
+      "same_seed_drift": 0.0,
+      "seed": 3,
+      "solution_diff": 1.0483037466344101e-12
+    },
+    {
+      "case": "engine_bore",
+      "converged": true,
+      "drift": 0.0013210213336362457,
+      "iterations": 8,
+      "levels": 3,
+      "n": 16,
+      "same_seed_bitwise": true,
+      "same_seed_drift": 0.0,
+      "seed": 4,
+      "solution_diff": 1.4067056805444148e-12
+    },
+    {
+      "case": "engine_bore",
+      "converged": true,
+      "drift": 0.0,
+      "iterations": 10,
+      "levels": 4,
+      "n": 32,
+      "same_seed_bitwise": true,
+      "same_seed_drift": 0.0,
+      "seed": 0,
+      "solution_diff": 0.0
+    },
+    {
+      "case": "engine_bore",
+      "converged": true,
+      "drift": 0.0047769418062292785,
+      "iterations": 10,
+      "levels": 4,
+      "n": 32,
+      "same_seed_bitwise": true,
+      "same_seed_drift": 0.0,
+      "seed": 1,
+      "solution_diff": 3.746771983173088e-12
+    },
+    {
+      "case": "engine_bore",
+      "converged": true,
+      "drift": 0.0008439159734139796,
+      "iterations": 10,
+      "levels": 4,
+      "n": 32,
+      "same_seed_bitwise": true,
+      "same_seed_drift": 0.0,
+      "seed": 2,
+      "solution_diff": 1.4382556869686484e-12
+    },
+    {
+      "case": "engine_bore",
+      "converged": true,
+      "drift": 0.0008504024167695934,
+      "iterations": 10,
+      "levels": 4,
+      "n": 32,
+      "same_seed_bitwise": true,
+      "same_seed_drift": 0.0,
+      "seed": 3,
+      "solution_diff": 1.8714238870980152e-12
+    },
+    {
+      "case": "engine_bore",
+      "converged": true,
+      "drift": 0.001224468816156054,
+      "iterations": 10,
+      "levels": 4,
+      "n": 32,
+      "same_seed_bitwise": true,
+      "same_seed_drift": 0.0,
+      "seed": 4,
+      "solution_diff": 3.905471420380575e-12
+    }
+  ]
+}

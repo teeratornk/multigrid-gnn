@@ -1,0 +1,11 @@
+# Every run parameter lives in a config group. Nothing is hardcoded in the source;
+# a run is fully described by its resolved config, which is written next to the result.
+defaults:
+  - case: conjugate_cavity
+  - solver: graph_mg
+  - _self_
+
+seed: 0
+dtype: float64          # float64 | float32
+device: cpu             # cpu | cuda
+out: result.json

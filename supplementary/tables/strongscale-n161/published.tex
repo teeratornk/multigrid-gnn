@@ -1,0 +1,26 @@
+\begin{table}[ht]
+\centering
+\caption{\textbf{Strong scaling on a larger fixed problem ($h_{161}$,
+$3.0\times10^{6}$ pressure DOFs).} The sequence starts at two GPUs, so the speedup column is $S_{2\to N}=t_2/t_N$ against the two-GPU run rather than the one-GPU reference used elsewhere (\Cref{sec:si-scaling-protocol}). Median of five repetitions on exclusive H200
+nodes, with the one degraded node excluded so the per-iteration timing is clean
+(within-cell spread $<5\%$). $h_{256}$ is omitted: it exceeds per-GPU memory below
+eight GPUs (see text), so a single-node strong-scaling curve cannot be formed.
+Relative to the main-text $h_{128}$ problem, the larger problem keeps the
+kernels compute-bound longer (block-Jacobi machinery efficiency $47\%$ vs $35\%$
+over two-to-eight GPUs), and the deflation's iteration saving compounds into a
+larger wall-clock speedup than block-Jacobi.}
+\label{tab:strongscale-n161}
+\footnotesize
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{r r S S S S c c}
+\toprule
+ & & \multicolumn{2}{c}{it/outer} & \multicolumn{2}{c}{ms/PCG-it} & \multicolumn{2}{c}{$S_{2\to N}=t_2/t_N$} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(lr){7-8}
+{GPUs} & {pressure DOFs/GPU} & {bj} & {Nic.} & {bj} & {Nic.} & {bj} & {Nic.} \\
+\midrule
+2 & 1.51M & 94.7  & 69.3  & 6.83 & 7.27 & {1.00$\times$} & {1.00$\times$} \\
+4 & 755k  & 133.8 & 93.4  & 4.54 & 4.94 & {1.42$\times$} & {1.42$\times$} \\
+8 & 378k  & 188.8 & 126.9 & 3.63 & 4.07 & {1.47$\times$} & {1.62$\times$} \\
+\bottomrule
+\end{tabular}
+\end{table}

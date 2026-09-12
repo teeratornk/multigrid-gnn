@@ -1,0 +1,36 @@
+\begin{table}[ht]
+\centering
+\caption{\textbf{Per-SIMPLE-iteration cost (ms), 2D and 3D benchmarks.} Cost of one SIMPLE outer iteration, measured in isolation on an exclusive node. All four solvers advance one SIMPLE outer iteration per step: OF12 is the steady-state SIMPLE cavity (\texttt{foamRun -solver fluid}, \texttt{ddtSchemes steadyState}, exclusive node), the same steady-SIMPLE run that also provides its wall-clock time (main text); OpenFOAM's native transient PIMPLE solver is not the apples-to-apples target for this steady benchmark. The four discretizations differ (CNN structured finite difference, GNN/FEniCSx P\textsubscript{2}--P\textsubscript{1} FEM, OF12 cell-centred finite volume method (FVM)), so this is a cross-discretization comparison at a shared iteration unit, not a same-method ratio. GNN = laplacian-preconditioned multigrid PCG with CUDA-graph capture; FEniCSx and OF12 on $32$ CPU cores.}
+\label{tab:msiter}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{l r S S S S}
+\toprule
+$\mathrm{Ra}$ & mesh & {CNN} & {GNN} & {FEniCSx} & {OF12} \\
+\midrule
+\multicolumn{6}{l}{\emph{Two-dimensional benchmark}}\\
+\midrule
+\multirow{3}{*}{$10^{4}$} & $h_{64}$ & 157.4 & 11.6 & 80.5 & 3.8 \\
+ & $h_{128}$ & 138.9 & 12.1 & 304.6 & 17.4 \\
+ & $h_{256}$ & 163.6 & 32.5 & 1160 & 78.2 \\
+\multirow{3}{*}{$10^{5}$} & $h_{64}$ & 173.4 & 11.9 & 80.0 & 4.0 \\
+ & $h_{128}$ & 183.6 & 12.8 & 306.9 & 15.9 \\
+ & $h_{256}$ & 168.8 & 17.6 & 1182 & 75.3 \\
+\multirow{3}{*}{$10^{6}$} & $h_{64}$ & 174.7 & 13.0 & 80.0 & 4.3 \\
+ & $h_{128}$ & 183.1 & 14.0 & 310.0 & 16.6 \\
+ & $h_{256}$ & 168.6 & 17.6 & 1184 & 70.9 \\
+\midrule
+\multicolumn{6}{l}{\emph{Three-dimensional benchmark}}\\
+\midrule
+\multirow{3}{*}{$10^{3}$} & $h_{16}$ & 408.1 & 22.7 & 578.5 & 4.7 \\
+ & $h_{32}$ & 461.5 & 31.7 & 5228 & 39.0 \\
+ & $h_{64}$ & 458.2 & 164.6 & 44084 & 444.3 \\
+\multirow{3}{*}{$10^{4}$} & $h_{16}$ & 418.9 & 19.1 & 604.6 & 4.8 \\
+ & $h_{32}$ & 463.6 & 32.1 & 5184 & 38.3 \\
+ & $h_{64}$ & 498.7 & 164.6 & 44698 & 428.3 \\
+\multirow{3}{*}{$10^{5}$} & $h_{16}$ & 434.6 & 19.8 & 594.6 & 5.3 \\
+ & $h_{32}$ & 462.7 & 32.8 & 5281 & 38.0 \\
+ & $h_{64}$ & 499.2 & 167.9 & 44476 & 446.8 \\
+\bottomrule
+\end{tabular}
+\end{table}

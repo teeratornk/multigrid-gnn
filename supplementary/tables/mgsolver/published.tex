@@ -1,0 +1,24 @@
+\begin{table}[ht]
+\centering
+\caption{\textbf{Standalone multigrid (Neural-Physics-style) versus
+multigrid-preconditioned conjugate gradient} on the 2D cavity pressure solve,
+settings identical except the pressure mode and, for the standalone solver, the
+substituted constant-coefficient operator $A_p=cK_p$ (relative operator match $0.15$). The
+two solvers agree on $\mathrm{Nu}$ to the four figures printed, so one column serves both.
+Wall ratio is standalone-solver over preconditioned-CG end-to-end.}
+\label{tab:mgsolver}
+\footnotesize
+\setlength{\tabcolsep}{6pt}
+\begin{tabular}{l l S r S S S}
+\toprule
+ & & {converged} & {outer} & \multicolumn{2}{c}{inner iterations/step} & {wall-clock} \\
+\cmidrule(lr){5-6}
+$\mathrm{Ra}$ & mesh & {$\mathrm{Nu}$} & {SIMPLE iters} & {solver} & {CG} & {ratio} \\
+\midrule
+$10^{4}$ & $h_{64}$  & 2.2450 & 5200  & 48.6  & 46.3 & 2.3 \\
+$10^{5}$ & $h_{64}$  & 4.5236 & 3000  & 28.2  & 11.7 & 3.0 \\
+$10^{6}$ & $h_{64}$  & 8.8466 & 5200  & 23.8  & 10.5 & 2.5 \\
+$10^{4}$ & $h_{128}$ & 2.2451 & 13100 & 227.6 & 21.3 & 17.4 \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,9 @@
+group,GPUs,DOF/GPU,ms/step two-level,ms/step block-Jac.,weak eff. (vs 2) two-level,weak eff. (vs 2) block-Jac.,(vs 1) two-level,CG iters/step two-level,CG iters/step block-Jac.
+Unsteady Rayleigh–Bénard,1,4.20M,1150,1155,–,–,1.00,78,78
+Unsteady Rayleigh–Bénard,2,4.20M,1886,3794,1.00,1.00,0.61,127,699
+Unsteady Rayleigh–Bénard,4,4.19M,2156,4820,0.87,0.79,0.53,151,900†
+Unsteady Rayleigh–Bénard,8,4.20M,2929,5259,0.64,0.72,0.39,178,900†
+Two-dimensional conjugate cavity,1,4.17M,901,900,–,–,1.00,241,242
+Two-dimensional conjugate cavity,2,4.17M,1333,3330,1.00,1.00,0.68,104,655
+Two-dimensional conjugate cavity,4,4.16M,1884,4481,0.71,0.74,0.48,162,900†
+Two-dimensional conjugate cavity,8,4.17M,2454,4539,0.54,0.73,0.37,179,900†

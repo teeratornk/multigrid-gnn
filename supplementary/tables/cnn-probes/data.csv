@@ -1,0 +1,6 @@
+intervention,result,conclusion
+pressure inner-solver budget raised 50× (100→5000 iterations per SIMPLE step),bit-identical SIMPLE iterates and identical L^2 at convergence,the pressure correction is not iteration-limited
+"momentum under-relaxation swept over α_U∈{0.3, 0.5, 1.0}",bit-identical L^2_u; identical y-ramp coefficient -1.1586,the SIMPLE coupling is not the floor
+homogeneous-Dirichlet variant of the manufactured solution (u=v=0 on all four walls),plateau at ‖e_u‖_{L^2}=1.54×10^-3 (vs. 1.62×10^-3 for eq:mms-2d); same y-ramp coefficient -1.15,the non-zero tangential velocity on the top and bottom walls is not the mechanism
+L^2 restricted to the strict interior (one or two cells of boundary band excluded),within 0.5% of the full-domain L^2,"the floor is global, not boundary-localized"
+discrete divergence applied to the exact manufactured velocity,"‖∇_h·u_exact‖∼10^-14, machine epsilon","the divergence stencil is consistent; the error enters through the momentum equation, not at iteration 0"

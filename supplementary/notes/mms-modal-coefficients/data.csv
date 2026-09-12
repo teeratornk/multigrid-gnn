@@ -1,0 +1,9 @@
+quantity,value,unit
+"coefficient of the cos(2πx)cos(2πy) mode of the pressure error, h_64",1.40×10^-3,
+"coefficient of the cos(2πx)cos(2πy) mode of the pressure error, h_128",3.18×10^-4,
+"coefficient of the cos(2πx)cos(2πy) mode of the pressure error, h_256",7.51×10^-5,
+"coefficient of the cos(2πx)cos(2πy) mode of the pressure error, h_512",1.88×10^-5,
+"coefficient ratio, h_64 to h_128",4.4,
+"coefficient ratio, h_128 to h_256",4.2,
+"coefficient ratio, h_256 to h_512",4.0,
+"share of the squared pressure error in that mode at h_256 and coarser, more than",99.8,%

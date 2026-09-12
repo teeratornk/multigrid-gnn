@@ -1,0 +1,4 @@
+GPUs,pressure DOFs/GPU,it/outer bj,it/outer Nic.,ms/PCG-it bj,ms/PCG-it Nic.,S_{2→N}=t_2/t_N bj,S_{2→N}=t_2/t_N Nic.
+2,1.51M,94.7,69.3,6.83,7.27,1.00×,1.00×
+4,755k,133.8,93.4,4.54,4.94,1.42×,1.42×
+8,378k,188.8,126.9,3.63,4.07,1.47×,1.62×

@@ -1,0 +1,165 @@
+{
+  "checks": {
+    "fp32_misses_rtol": true,
+    "fp64_and_mixed_converged": true,
+    "mixed_extra_in_range": true
+  },
+  "config": {
+    "cases": {
+      "conjugate_cavity": {
+        "name": "conjugate_cavity",
+        "params": {
+          "n": 64
+        }
+      },
+      "engine_bore": {
+        "name": "engine_bore",
+        "params": {
+          "bore_frac": 0.42,
+          "contrast": 1000.0,
+          "liner_contrast": 300.0,
+          "liner_frac": 0.06,
+          "n": 64
+        }
+      },
+      "heat_sink": {
+        "name": "heat_sink",
+        "params": {
+          "contrast": 1000.0,
+          "fins": 4,
+          "n": 64
+        }
+      }
+    },
+    "deterministic": true,
+    "dtype": "float64",
+    "experiment": {
+      "cases": [
+        "conjugate_cavity",
+        "heat_sink",
+        "engine_bore"
+      ],
+      "extra_range": [
+        0,
+        2
+      ],
+      "inner_dtype": "float32",
+      "name": "mixed_precision",
+      "profiles": {
+        "paper": {
+          "device": "cuda",
+          "sizes": [
+            32,
+            64,
+            128
+          ]
+        },
+        "quick": {
+          "device": "cpu",
+          "sizes": [
+            16,
+            32
+          ]
+        }
+      }
+    },
+    "seed": 0,
+    "vcycle": {
+      "max_iter": 200,
+      "max_levels": 10,
+      "n_post": 2,
+      "n_pre": 2,
+      "name": "graph_mg",
+      "omega": 0.7,
+      "rtol": 1e-08,
+      "use_sparse_mm": false
+    }
+  },
+  "experiment": "mixed_precision",
+  "headline": {
+    "fp32_residual_min": 1.3572063316782533e-07,
+    "mixed_extra_max": 0,
+    "mixed_extra_min": 0
+  },
+  "profile": "quick",
+  "rows": [
+    {
+      "case": "conjugate_cavity",
+      "fp32_converged": false,
+      "fp32_iterations": 200,
+      "fp32_residual": 1.3572063316782533e-07,
+      "fp64_converged": true,
+      "fp64_iterations": 8,
+      "mixed_converged": true,
+      "mixed_extra": 0,
+      "mixed_iterations": 8,
+      "mixed_solution_diff": 3.686306409650915e-15,
+      "n": 16
+    },
+    {
+      "case": "conjugate_cavity",
+      "fp32_converged": false,
+      "fp32_iterations": 200,
+      "fp32_residual": 2.5759114772295654e-07,
+      "fp64_converged": true,
+      "fp64_iterations": 8,
+      "mixed_converged": true,
+      "mixed_extra": 0,
+      "mixed_iterations": 8,
+      "mixed_solution_diff": 5.17906690309044e-14,
+      "n": 32
+    },
+    {
+      "case": "heat_sink",
+      "fp32_converged": false,
+      "fp32_iterations": 200,
+      "fp32_residual": 2.7851194378785147e-05,
+      "fp64_converged": true,
+      "fp64_iterations": 18,
+      "mixed_converged": true,
+      "mixed_extra": 0,
+      "mixed_iterations": 18,
+      "mixed_solution_diff": 6.023073238756844e-09,
+      "n": 16
+    },
+    {
+      "case": "heat_sink",
+      "fp32_converged": false,
+      "fp32_iterations": 200,
+      "fp32_residual": 5.7229844983465675e-05,
+      "fp64_converged": true,
+      "fp64_iterations": 16,
+      "mixed_converged": true,
+      "mixed_extra": 0,
+      "mixed_iterations": 16,
+      "mixed_solution_diff": 8.796605310974391e-11,
+      "n": 32
+    },
+    {
+      "case": "engine_bore",
+      "fp32_converged": false,
+      "fp32_iterations": 200,
+      "fp32_residual": 1.5261639534868468e-07,
+      "fp64_converged": true,
+      "fp64_iterations": 8,
+      "mixed_converged": true,
+      "mixed_extra": 0,
+      "mixed_iterations": 8,
+      "mixed_solution_diff": 1.232228152931229e-14,
+      "n": 16
+    },
+    {
+      "case": "engine_bore",
+      "fp32_converged": false,
+      "fp32_iterations": 200,
+      "fp32_residual": 4.092455021785541e-07,
+      "fp64_converged": true,
+      "fp64_iterations": 10,
+      "mixed_converged": true,
+      "mixed_extra": 0,
+      "mixed_iterations": 10,
+      "mixed_solution_diff": 4.342357369370418e-13,
+      "n": 32
+    }
+  ]
+}

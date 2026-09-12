@@ -1,0 +1,25 @@
+\begin{table}[ht]
+\centering
+\caption{\textbf{Weak scaling at fixed total DOF per GPU} ($\approx$37M), all fields. Efficiency $=t_1/t_N$, single-GPU reference. Counts differ from the pressure-DOF sweeps of \Cref{tab:weakscale,tab:strongscale}, which resolve the pressure solve alone on the same solver.}
+\label{tab:weak}
+\begin{tabular}{llrrrr}
+\toprule
+Problem & GPUs & Mesh & total DOF/GPU (M) & ms/step & Eff. \\
+\midrule
+3D cavity & 1 & $h_{120}$ & 36.9 & 973$\pm$5 & 1.00 \\
+ & 2 & $h_{151}$ & 36.7 & 1371$\pm$21 & 0.71 \\
+ & 4 & $h_{190}$ & 36.6 & 1444$\pm$46 & 0.67 \\
+ & 8 & $h_{240}$ & 36.9 & 1708$\pm$98 & 0.57 \\
+\midrule
+2D RBC & 1 & $h_{1190}$ & 36.8 & 807$\pm$0 & 1.00 \\
+ & 2 & $h_{1683}$ & 36.8 & 1281$\pm$3 & 0.63 \\
+ & 4 & $h_{2380}$ & 36.8 & 1672$\pm$31 & 0.48 \\
+ & 8 & $h_{3366}$ & 36.8 & 2116$\pm$867 & 0.38 \\
+\midrule
+2D CHT & 1 & $h_{1680}$ & 36.7 & 707$\pm$4 & 1.00 \\
+ & 2 & $h_{2380}$ & 36.8 & 1212$\pm$45 & 0.58 \\
+ & 4 & $h_{3360}$ & 36.7 & 1335$\pm$31 & 0.53 \\
+ & 8 & $h_{4760}$ & 36.8 & 2389$\pm$275 & 0.30 \\
+\bottomrule
+\end{tabular}
+\end{table}

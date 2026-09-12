@@ -1,0 +1,26 @@
+name: stationary_vs_pcg
+# A V-cycle built on each operator, used two ways on that same operator: as the stationary
+# iteration x <- x + omega B(b - Ax), and as the preconditioner of CG.
+profiles:
+  quick: {device: cpu, sizes: [16, 32]}
+  paper: {device: cuda, sizes: [32, 64, 128]}
+cases: [conjugate_cavity, heat_sink, engine_bore]
+omegas: [1.0]               # the plain standalone cycle
+optimal_omega: true         # also 2/(lambda_min + lambda_max) of BA, the best fixed step
+lanczos_steps: 300          # cap; the recursion stops once the residual falls by fp64 epsilon
+stationary_max_iter: 2000   # cap, 7x the largest count measured (279)
+pcg_max_iter: ${vcycle.max_iter}   # the CLI's cap; the largest count measured is 20
+divergence_ratio: 1.0e8     # relative residual taken as divergence; no run here passes it
+factor_window: 5            # steps averaged for the observed contraction factor
+# Tolerances come from the spread measured between reruns, 1 and 8 threads, CPU and CUDA,
+# and deterministic and nondeterministic CUDA kernels. Each comment gives that spread.
+regression:
+  omega: {rule: rel, tol: 3.0e-6}              # optimal omega from Ritz values, spread 2.9e-7 CPU vs CUDA, x10
+  ritz_max: {rule: rel, tol: 3.0e-6}           # spread 3.1e-7 CPU vs CUDA, x10
+  ritz_min: {rule: rel, tol: 1.0e-9}           # spread 3.0e-13; the 1e-9 round-off allowance
+  predicted_radius: {rule: rel, tol: 3.0e-7}   # spread 3.3e-8 CPU vs CUDA, x10
+  stationary_factor: {rule: rel, tol: 2.0e-5}  # spread 1.8e-6 CPU vs CUDA, x10
+  stationary_iterations: {rule: abs, tol: 1}   # spread 0; one iteration of round-off allowance
+  pcg_iterations: {rule: abs, tol: 1}          # spread 0; one iteration of round-off allowance
+  ratio_min: {rule: rel, tol: 0.25}            # follows the counts: one iteration on the smallest count (8) is 12.5%, twice that
+  ratio_max: {rule: rel, tol: 0.25}            # as ratio_min

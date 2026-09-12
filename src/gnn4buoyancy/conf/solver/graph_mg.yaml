@@ -1,0 +1,8 @@
+name: graph_mg           # V-cycle preconditioned CG, the construction of the paper
+max_levels: 10
+omega: 0.7               # weighted-Jacobi relaxation
+n_pre: 2
+n_post: 2
+rtol: 1.0e-8
+max_iter: 200
+use_sparse_mm: false     # false = explicit gather/scatter message passing

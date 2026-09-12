@@ -1,0 +1,5 @@
+Ra,mesh,converged Nu,outer SIMPLE iters,inner iterations/step solver,inner iterations/step CG,wall-clock ratio
+10^4,h_64,2.2450,5200,48.6,46.3,2.3
+10^5,h_64,4.5236,3000,28.2,11.7,3.0
+10^6,h_64,8.8466,5200,23.8,10.5,2.5
+10^4,h_128,2.2451,13100,227.6,21.3,17.4

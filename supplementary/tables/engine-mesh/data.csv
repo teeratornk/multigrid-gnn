@@ -1,0 +1,4 @@
+Mesh,tets,P_2 DOF,min dih. (deg),iface facets,h_Γ/R,fire-deck (K),liner-side mean (K)
+coarse,27573,41036,13.7,3178,0.121,526.6,394.5
+medium,61327,88897,12.0,5684,0.091,526.6,397.6
+fine,125781,178636,12.0,9260,0.071,526.6,400.6

@@ -1,0 +1,6 @@
+quantity,value,unit
+"GPU speedup over the CPU reference, both codes at 1e-7, coarse mesh",0.84,
+"GPU speedup over the CPU reference, both codes at 1e-7, medium mesh",11.61,
+"GPU speedup over the CPU reference, both codes at 1e-7, fine mesh",24.01,
+"change from the reported ratios, two finer meshes, at most",0.5,%
+"change from the reported ratio, coarsest mesh",3.7,%

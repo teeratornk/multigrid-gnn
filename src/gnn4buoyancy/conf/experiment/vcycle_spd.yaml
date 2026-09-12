@@ -1,0 +1,19 @@
+name: vcycle_spd
+# CG needs a symmetric positive definite preconditioner. Check the three things that make
+# the V-cycle one: R = P^T on every level, <Bx,y> = <x,By>, and <x,Bx> > 0.
+profiles:
+  quick: {device: cpu, sizes: [16, 32]}
+  paper: {device: cuda, sizes: [32, 64, 128]}
+cases: [conjugate_cavity, heat_sink, engine_bore]
+sweeps: [[2, 2], [3, 1]]   # (n_pre, n_post): equal counts, then unequal
+n_vectors: 8               # random vectors for the Rayleigh quotients; the first two test symmetry
+roundoff: 1.0e-14          # claim bound on the symmetry defect at equal counts, about 45 fp64 epsilons
+asymmetry_floor: 1.0e-6    # the defect at unequal counts must reach this, as in tests/test_solver.py
+# Tolerances come from the spread measured between reruns, 1 and 8 threads, CPU and CUDA,
+# and deterministic and nondeterministic CUDA kernels. Each comment gives that spread.
+regression:
+  symmetry_defect: {rule: decades, tol: 1.0e-9, floor: 1.0e-14}   # equal counts, at most 2e-17, sit under the floor; unequal counts spread 6.3e-14 decades, under the 1e-9 round-off allowance
+  symmetry_equal_max: {rule: decades, tol: 1.0, floor: 1.0e-14}   # round-off at most 2e-17, spread 0.03 decades; under the floor, so this caps it at 1e-13
+  symmetry_unequal_min: {rule: rel, tol: 1.0e-9}                  # spread 1.5e-13 CPU vs CUDA; the 1e-9 round-off allowance
+  symmetry_unequal_max: {rule: rel, tol: 1.0e-9}                  # spread 7e-15; the 1e-9 round-off allowance
+  rayleigh_min: {rule: rel, tol: 1.0e-9}   # spread 3.4e-16 relative; below the 1e-9 round-off allowance for a CPU model not measured

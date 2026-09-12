@@ -1,0 +1,11 @@
+name: engine_bore
+# Mid-plane engine section: gas bore, liner, metal block. A representative
+# parametric geometry, not the mesh behind the paper's engine numbers.
+# The point of including it is the curved solid-fluid interface, which staircases
+# on a structured grid and is harder for the coarsening than a straight one.
+params:
+  n: 64
+  bore_frac: 0.42
+  contrast: 1.0e3
+  liner_frac: 0.06
+  liner_contrast: 3.0e2

@@ -1,0 +1,20 @@
+The protocol is the conjugate-cavity protocol of Section~\ref{sec:cht}: an exclusive node,
+the CPU run on $32$ cores, both implementations driving the pressure to the same $10^{-6}$, identical
+mesh, time step, step count and rotational-IPCS update, three repetitions with the median
+reported, and only the linear-algebra backend and the execution device changed. This is Tier~B (Methods). \Cref{tab:engine-throughput} gives the result. The pattern matches the conjugate
+cavity: the GPU per-step cost is nearly flat across a $21\times$ size range while the CPU
+sparse solve grows with the problem, so the ratio crosses over with size. At the coarsest mesh the
+CPU is ahead, at $0.81\times$; at the finest the GPU is $23.9\times$ faster. That the GPU loses at $3.6\times10^{4}$~DOF is the same
+small-problem loss reported for the cavity, not a geometry effect. Both implementations return the same physics: the fire-deck peak agrees to $0.22\%$ or
+better at every mesh, which is what makes the timing a comparison of two ways to take the
+same step. The mass and diffusion solves are the bulk of the CPU step, so their tolerance
+is matched at $10^{-10}$ in both implementations; leaving them mismatched at $10^{-7}$ on
+the GPU inflates the ratio by $1.25$--$1.28\times$. Matching both implementations at
+$10^{-7}$ instead gives $0.84$, $11.61$ and $24.01$, within $0.5\%$ of the reported ratios
+at the two finer meshes and $3.7\%$ at the coarsest, so the result does not turn on which
+matched tolerance is chosen. Doubling the CPU allocation from $16$ to $32$ cores moved the
+CPU time by $-1$ to $+3\%$ at every mesh, so PETSc CG\,+\,GAMG does not thread-scale here
+and the ratios are not an under-resourced baseline. One protocol difference should be
+noted. The conjugate-cavity GPU run uses
+CUDA-graph capture, worth roughly $2\times$ on pressure-dominated work. The engine GPU driver
+runs eagerly; CUDA-graph capture was not evaluated for this case.
