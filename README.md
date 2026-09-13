@@ -22,6 +22,9 @@ code that rebuilds the tables and four of the five figures and checks them again
 printed. Unlike the rest of the package, these are results of the production solvers. See
 `supplementary/README.md`.
 
+Version 1.2.1 corrects four entries in the list of corrections in `supplementary/README.md` and
+lists the errors a later audit found in the supplementary record. The code is unchanged.
+
 ## Contents
 
 | path | what it holds |

@@ -6,4 +6,4 @@ from .pcg import pcg
 from .vcycle import v_cycle
 
 __all__ = ["build_case", "build_hierarchy", "MessagePassingOperator", "pcg", "v_cycle"]
-__version__ = "1.2.0"
+__version__ = "1.2.1"

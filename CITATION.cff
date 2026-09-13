@@ -6,7 +6,7 @@ authors:
   - family-names: Kadeethum
     given-names: Teeratorn
     email: meen.kadeethum@siemens-energy.com
-version: 1.2.0
+version: 1.2.1
 license: MIT
 repository-code: "https://github.com/teeratornk/multigrid-gnn"
 abstract: >-

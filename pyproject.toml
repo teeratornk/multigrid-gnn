@@ -1,6 +1,6 @@
 [project]
 name = "gnn4buoyancy-mwe"
-version = "1.2.0"
+version = "1.2.1"
 description = "Minimal working example: a fixed-weight algebraic multigrid V-cycle executed as message-passing layers"
 readme = "README.md"
 # Tested on the versions in uv.lock. Widen only after testing: this package uses torch
