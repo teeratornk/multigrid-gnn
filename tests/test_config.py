@@ -57,3 +57,35 @@ def test_resolved_config_is_serialisable():
     c = _cfg(["case=heat_sink"])
     d = OmegaConf.to_container(c, resolve=True)
     assert OmegaConf.create(d).case.params.contrast == 1000.0
+
+
+def test_cli_runs_of_one_config_are_bitwise_repeatable(tmp_path):
+    """A run is described by its resolved config alone. Smoothed aggregation draws a start
+    vector from NumPy's global random state, so the CLI has to seed NumPy as well as
+    torch; otherwise two runs of one config differ in their last digits."""
+    import json
+    import numpy as np
+    from gnn4buoyancy import cli
+    runs = []
+    for i in range(2):
+        np.random.seed(1000 + i)                       # a different global state each time
+        cli.main(_cfg([f"out={tmp_path / f'run{i}.json'}"]))   # a config bypasses the launcher
+        runs.append(json.loads((tmp_path / f"run{i}.json").read_text()))
+    assert runs[0]["level_sizes"] == runs[1]["level_sizes"]
+    assert runs[0]["residuals"] == runs[1]["residuals"]
+
+
+def test_cli_refuses_to_write_a_non_finite_result(tmp_path, monkeypatch):
+    """The result file is standard JSON: a NaN in the history must fail the run loudly, as the
+    experiments' writer already does, instead of writing a file other readers reject."""
+    import torch
+    from gnn4buoyancy import cli
+    from gnn4buoyancy.pcg import SolveResult
+
+    def broken(levels, b, **kwargs):
+        return SolveResult(torch.zeros_like(b), 1, [1.0, float("nan")], False)
+
+    monkeypatch.setattr(cli, "pcg", broken)
+    with pytest.raises(ValueError):
+        cli.main(_cfg([f"out={tmp_path / 'run.json'}"]))
+    assert not (tmp_path / "run.json").exists()

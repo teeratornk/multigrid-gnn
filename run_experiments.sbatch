@@ -5,8 +5,8 @@
 #SBATCH --mem=64G
 #SBATCH --time=01:00:00
 #SBATCH --output=mwe_gpu_%j.out
-# Runs every experiment twice over: the quick profile on the CPU and the paper profile on the
-# GPU. Each run is checked against experiments/expected/<name>.<profile>.json, or rewrites
+# Runs every experiment twice over on one GPU node: the quick profile on the node's CPU and
+# the paper profile on its GPU. Each run is checked against experiments/expected/<name>.<profile>.json, or rewrites
 # it when EXPERIMENTS_MODE=refresh:
 #
 #     sbatch --account=<acct> --qos=<qos> run_experiments.sbatch

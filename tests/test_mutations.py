@@ -221,3 +221,86 @@ def test_check_mode_exits_nonzero_on_a_corrupted_expectation(tmp_path):
                        cwd=tmp_path, capture_output=True, text=True, timeout=300)
     assert r.returncode != 0, r.stdout + r.stderr
     assert "MISMATCH" in r.stdout and "levels" in r.stdout, r.stdout
+
+
+# --- the comparator itself ---------------------------------------------------------------
+
+def _inside(value, rule):
+    """A value half a tolerance away from `value`, which every rule must accept."""
+    kind, tol = rule["rule"], rule.get("tol", 0)
+    if kind == "abs":
+        return value + 0.5 * tol
+    if kind == "rel":
+        return value * (1 + 0.5 * tol)
+    if kind == "decades":
+        return max(abs(value), rule["floor"]) * 10 ** (0.5 * tol)
+    return value
+
+
+def _nearly_outside(value, rule):
+    """Three quarters of a tolerance away: accepted by the stated tolerance, rejected by one
+    that was halved, so a comparator that quietly tightened is caught as well as one that
+    loosened."""
+    kind, tol = rule["rule"], rule.get("tol", 0)
+    if kind == "abs":
+        return value + 0.75 * tol
+    if kind == "rel":
+        return value * (1 + 0.75 * tol)
+    if kind == "decades":
+        return max(abs(value), rule["floor"]) * 10 ** (0.75 * tol)
+    return value
+
+
+def _outside(value, rule):
+    """A value one and a half tolerances away, which every rule must reject."""
+    kind, tol = rule["rule"], rule.get("tol", 0)
+    if kind == "abs":
+        return value + 1.5 * tol
+    if kind == "rel":
+        return value * (1 + 1.5 * tol)
+    if kind == "decades":
+        return max(abs(value), rule["floor"]) * 10 ** (1.5 * tol)
+    return value + 1
+
+
+def _holder(record, field):
+    return record["headline"] if field in record["headline"] else next(
+        r for r in record["rows"] if r.get(field) is not None)
+
+
+@pytest.mark.parametrize("name", NAMES)
+def test_every_tolerance_is_exactly_the_one_the_config_states(name):
+    """Half and three quarters of a tolerance away pass and one and a half away fails, so a
+    comparator whose tolerance drifted by a factor of two either way is caught, not only one
+    that is far off."""
+    want = json.loads((EXPECTED / f"{name}.quick.json").read_text())
+    rules = OmegaConf.to_container(_cfg(name).experiment.regression, resolve=True)
+    tested = 0
+    for field, rule in rules.items():
+        value = _holder(want, field)[field]
+        if not isinstance(value, (int, float)) or isinstance(value, bool):
+            continue
+        if rule["rule"] == "rel" and value == 0:
+            continue
+        for make, expect in ((_inside, 0), (_nearly_outside, 0), (_outside, 1)):
+            bad = json.loads(json.dumps(want))
+            _holder(bad, field)[field] = make(value, rule)
+            problems = summary.compare(want, bad, rules)
+            assert len(problems) == expect, (field, make.__name__, problems)
+        tested += 1
+    assert tested, name
+
+
+def test_compare_reports_changed_checks_config_and_lost_rows():
+    """A changed claim verdict, a changed configuration and a missing row are each a
+    reported difference, not something the row-by-row field comparison walks past."""
+    want = json.loads((EXPECTED / "vcycle_identity.quick.json").read_text())
+    rules = OmegaConf.to_container(_cfg("vcycle_identity").experiment.regression, resolve=True)
+    assert summary.compare(want, want, rules) == []
+    for key in ("checks", "config"):
+        bad = json.loads(json.dumps(want))
+        bad[key] = dict(bad[key], review="changed")
+        assert any(p.startswith(key) for p in summary.compare(want, bad, rules)), key
+    bad = json.loads(json.dumps(want))
+    bad["rows"] = bad["rows"][:-1]
+    assert any(p.startswith("rows") for p in summary.compare(want, bad, rules))

@@ -134,3 +134,96 @@ def test_mixed_dtype_is_refused(cavity):
     b64 = torch.zeros(cavity.shape[0], dtype=torch.float64)
     with _pytest.raises(TypeError, match="dtype"):
         levels[0].A(b64)
+
+
+# --- the preconditioner argument, and what `converged` means -----------------------------
+
+def test_pcg_applies_the_given_preconditioner_from_the_first_step(cavity, rng):
+    """`precondition=` replaces the V-cycle on every step, the first one included: the
+    first search direction is z0 = B r0. A preconditioner that only took over from the
+    second step would give the mixed-precision experiment a first direction from the fp64
+    cycle it is meant to replace."""
+    from gnn4buoyancy.vcycle import v_cycle
+    levels = build_hierarchy(cavity)
+    b = torch.as_tensor(rng.standard_normal(cavity.shape[0]))
+    seen = []
+
+    def counting(r):
+        seen.append(r.clone())
+        return v_cycle(levels, r, omega=0.7, n_pre=2, n_post=2)
+
+    res = pcg(levels, b, rtol=1e-30, max_iter=3, precondition=counting)
+    assert res.iterations == 3
+    assert len(seen) == 4, "one application before the loop and one per step"
+    assert torch.equal(seen[0], b), "the first application is to r0 = b - A x0 = b"
+
+
+def test_converged_means_the_true_residual_met_rtol(rng):
+    """`converged` states that the TRUE residual b - Ax met rtol, on both exits: the
+    in-loop acceptance and the max_iter exit. It is not a looser bound. In float32 the
+    recurrence residual falls far below the true one, which stalls at a floor, so a
+    tolerance set just under that floor is reached by the recurrence and not by the true
+    residual, which is where a loosened acceptance would show."""
+    A = build_case("heat_sink", n=32, fins=4, contrast=1e3)
+    levels = build_hierarchy(A, dtype=torch.float32)
+    b = torch.as_tensor(rng.standard_normal(A.shape[0]), dtype=torch.float32)
+
+    def true_rel(x):
+        return (torch.linalg.vector_norm(b - levels[0].A(x))
+                / torch.linalg.vector_norm(b)).item()
+
+    floor = true_rel(pcg(levels, b, rtol=1e-8, max_iter=400).x)   # measured here, not as reported
+    assert 1e-7 < floor < 1e-2, "float32 must stall well above round-off for this test to bite"
+    for rtol, max_iter in ((floor / 3, 400), (floor / 3, 2), (3 * floor, 400)):
+        r = pcg(levels, b, rtol=rtol, max_iter=max_iter)
+        t = true_rel(r.x)
+        assert r.converged == (t <= rtol), (rtol, max_iter, r.converged, t)
+        assert abs(r.residuals[-1] - t) <= 1e-3 * t
+
+
+def test_breakdown_below_working_precision_returns_a_finite_result(rng):
+    """An rtol far below single precision drives the recurrence to underflow. The solver must
+    stop on the breakdown and report the true residual of its last iterate, not NaN."""
+    A = build_case("heat_sink", n=32, fins=4, contrast=1e3)
+    levels = build_hierarchy(A, dtype=torch.float32)
+    b = torch.as_tensor(rng.standard_normal(A.shape[0]), dtype=torch.float32)
+    r = pcg(levels, b, rtol=1e-30, max_iter=400)
+    assert not r.converged and 0 < r.iterations <= 400
+    assert all(np.isfinite(r.residuals)) and torch.isfinite(r.x).all()
+    true_rel = (torch.linalg.vector_norm(b - levels[0].A(r.x)) / torch.linalg.vector_norm(b)).item()
+    assert abs(r.residuals[-1] - true_rel) <= 1e-3 * true_rel
+
+
+def test_max_iter_zero_returns_the_initial_residual_without_error(cavity, rng):
+    """`solver.max_iter` is a config knob, so zero must be a clean no-op: no iterate, one
+    residual entry, not converged (review v2, A6-01)."""
+    levels = build_hierarchy(cavity)
+    b = torch.as_tensor(rng.standard_normal(cavity.shape[0]))
+    r = pcg(levels, b, rtol=1e-8, max_iter=0)
+    assert r.iterations == 0 and not r.converged
+    assert len(r.residuals) == 1 and torch.equal(r.x, torch.zeros_like(b))
+
+
+def test_breakdown_counts_only_completed_iterations(cavity, rng):
+    """A zero preconditioner breaks the recurrence on the first step, before any iterate
+    exists. The count must be zero and `residuals` must keep its one-entry-per-iteration
+    shape, as on every other exit (review v2, A6-03)."""
+    levels = build_hierarchy(cavity)
+    b = torch.as_tensor(rng.standard_normal(cavity.shape[0]))
+    r = pcg(levels, b, rtol=1e-8, max_iter=50, precondition=torch.zeros_like)
+    assert r.iterations == 0 and not r.converged
+    assert len(r.residuals) == r.iterations + 1
+
+
+def test_residual_history_has_one_entry_per_iteration_on_every_exit(rng):
+    """The invariant `len(residuals) == iterations + 1` on the converged, the capped and the
+    breakdown exits."""
+    A = build_case("heat_sink", n=32, fins=4, contrast=1e3)
+    b64 = torch.as_tensor(rng.standard_normal(A.shape[0]))
+    levels = build_hierarchy(A)
+    for kwargs in (dict(rtol=1e-8, max_iter=400), dict(rtol=1e-8, max_iter=3)):
+        r = pcg(levels, b64, **kwargs)
+        assert len(r.residuals) == r.iterations + 1, kwargs
+    levels32 = build_hierarchy(A, dtype=torch.float32)
+    r = pcg(levels32, b64.to(torch.float32), rtol=1e-30, max_iter=400)
+    assert not r.converged and len(r.residuals) == r.iterations + 1

@@ -93,7 +93,7 @@
       "mixed_converged": true,
       "mixed_extra": 0,
       "mixed_iterations": 8,
-      "mixed_solution_diff": 5.3115240423473166e-14,
+      "mixed_solution_diff": 3.5428165912836255e-14,
       "n": 32
     },
     {
@@ -106,7 +106,7 @@
       "mixed_converged": true,
       "mixed_extra": 0,
       "mixed_iterations": 10,
-      "mixed_solution_diff": 1.82357578312205e-14,
+      "mixed_solution_diff": 1.8344803958070213e-14,
       "n": 64
     },
     {
@@ -119,7 +119,7 @@
       "mixed_converged": true,
       "mixed_extra": 0,
       "mixed_iterations": 10,
-      "mixed_solution_diff": 4.440169969661201e-15,
+      "mixed_solution_diff": 1.1103432164848961e-14,
       "n": 128
     },
     {
@@ -132,7 +132,7 @@
       "mixed_converged": true,
       "mixed_extra": 0,
       "mixed_iterations": 16,
-      "mixed_solution_diff": 8.795360450442867e-11,
+      "mixed_solution_diff": 2.096030601301462e-11,
       "n": 32
     },
     {
@@ -145,7 +145,7 @@
       "mixed_converged": true,
       "mixed_extra": 0,
       "mixed_iterations": 20,
-      "mixed_solution_diff": 6.044393921301386e-10,
+      "mixed_solution_diff": 8.0261023821709e-10,
       "n": 64
     },
     {
@@ -158,7 +158,7 @@
       "mixed_converged": true,
       "mixed_extra": 0,
       "mixed_iterations": 17,
-      "mixed_solution_diff": 8.17931808056844e-13,
+      "mixed_solution_diff": 1.687800576205205e-12,
       "n": 128
     },
     {
@@ -171,7 +171,7 @@
       "mixed_converged": true,
       "mixed_extra": 0,
       "mixed_iterations": 10,
-      "mixed_solution_diff": 4.3364492050302495e-13,
+      "mixed_solution_diff": 2.0941833591318845e-13,
       "n": 32
     },
     {
@@ -184,7 +184,7 @@
       "mixed_converged": true,
       "mixed_extra": 0,
       "mixed_iterations": 11,
-      "mixed_solution_diff": 1.6228112222320797e-14,
+      "mixed_solution_diff": 2.318021447132968e-14,
       "n": 64
     },
     {
@@ -197,7 +197,7 @@
       "mixed_converged": true,
       "mixed_extra": 0,
       "mixed_iterations": 12,
-      "mixed_solution_diff": 8.192967701479182e-15,
+      "mixed_solution_diff": 1.274802248733753e-14,
       "n": 128
     }
   ]

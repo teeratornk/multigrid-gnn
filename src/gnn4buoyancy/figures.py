@@ -162,21 +162,14 @@ def engine_geom(cfg, root: Path, pdf: Path | None = None) -> dict:
 
 # --- fig:rbc-stats ---------------------------------------------------------------------------------
 
-def integrated_autocorr_time(x: np.ndarray, window: float) -> tuple[float, int, np.ndarray]:
-    """Sokal automatic windowing: tau_int = 1 + 2 sum_{k>=1} rho_k, truncated at the first M
-    with M >= window * tau. Returns tau in samples, M and the autocorrelation rho."""
+def autocorrelation(x: np.ndarray) -> np.ndarray:
+    """The normalised autocorrelation rho_k of a series, by FFT, for every lag k."""
     x = np.asarray(x, float)
     n = x.size
     x = x - x.mean()
     f = np.fft.rfft(x, n=2 * n)
     acov = np.fft.irfft(f * np.conj(f))[:n].real / (n - np.arange(n))
-    rho = acov / acov[0]
-    tau = 1.0
-    for m in range(1, n):
-        tau = 1.0 + 2.0 * rho[1:m + 1].sum()
-        if m >= window * tau:
-            return tau, m, rho
-    return tau, n - 1, rho
+    return acov / acov[0]
 
 
 def decorrelation_lag(rho: np.ndarray) -> int:
@@ -207,7 +200,7 @@ def rbc_stats(cfg, root: Path, pdf: Path | None = None) -> dict:
     t_ff = t * turnovers
     developed = t >= float(cfg.warmup)
     x, tff_dev = nu[developed], t_ff[developed]
-    _, _, rho = integrated_autocorr_time(x, float(cfg.sokal_window))
+    rho = autocorrelation(x)
     tau_dec = decorrelation_lag(rho) * dt * turnovers
     curve = blocking_curve(x)
     reliable = [ci for blocks, ci in curve if blocks >= int(cfg.reliable_blocks)]

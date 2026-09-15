@@ -246,3 +246,20 @@ def test_licence_is_the_same_everywhere():
              "CITATION.cff": re.search(r"^license:\s*(\S+)\s*$",
                                        (ROOT / "CITATION.cff").read_text(), re.M).group(1)}
     assert set(found.values()) == {"MIT"}, found
+
+
+def test_stationary_history_is_the_recomputed_residual(cavity, rng):
+    """The stationary history is b - A x recomputed at every step, not a recurrence. With
+    an affine operator the two differ by one whole offset at every step, so a
+    recurrence is caught here, where a linear operator would hide it behind round-off."""
+    levels = _seeded(cavity)
+    offset = torch.ones(cavity.shape[0])
+
+    def affine(x):
+        return levels[0].A(x) + offset
+
+    b = torch.as_tensor(rng.standard_normal(cavity.shape[0]))
+    res = stationary(affine, _cycle(levels), b, omega=0.5, rtol=1e-30, max_iter=5)
+    true = (torch.linalg.vector_norm(b - affine(res.x)) / torch.linalg.vector_norm(b)).item()
+    assert res.iterations == 5
+    assert abs(res.residuals[-1] - true) <= 1e-12 * max(true, 1.0)

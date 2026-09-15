@@ -238,3 +238,75 @@ def test_figures_draw(cfg, name, tmp_path):
     pdf = tmp_path / f"{name}.pdf"
     sup.FIGURES[name](cfg.figures[name], SUP, pdf)
     assert pdf.read_bytes()[:5] == b"%PDF-"
+
+
+def test_check_mode_exits_nonzero_on_a_mismatch(copy, tmp_path):
+    data = copy / "notes" / "coarse-space-ablation" / "data.csv"
+    data.write_text(data.read_text(encoding="utf-8").replace("283.5", "283.6", 1),
+                    encoding="utf-8")
+    r = subprocess.run([sys.executable, "-m", "gnn4buoyancy.supplementary", "mode=check",
+                        f"root={copy}", f"hydra.run.dir={tmp_path / 'run'}"],
+                       cwd=ROOT, capture_output=True, text=True, timeout=300)
+    assert r.returncode == 1, r.stdout + r.stderr
+    assert "MISMATCH note coarse-space-ablation" in r.stdout
+
+
+def test_an_unlisted_file_inside_a_table_folder_fails(copy, cfg):
+    (copy / "tables" / "msiter" / "stray.csv").write_text("x\n", encoding="utf-8")
+    _, problems = sup.run(cfg, copy, None)
+    assert any(p.startswith("tables/msiter/stray.csv") for p in problems)
+
+
+def test_the_digit_check_sees_a_dropped_sign(monkeypatch):
+    """A conversion that loses a minus, in a value or in an exponent, changes the token."""
+    original = sup.cell_text
+    monkeypatch.setattr(sup, "cell_text", lambda raw: original(raw).replace("-", ""))
+    folder = SUP / "tables" / "mms-distributed"
+    problems = sup.check_table("mms-distributed",
+                               (folder / "published.tex").read_text(encoding="utf-8"),
+                               sup.read_csv(folder / "data.csv"))
+    assert any("printed numbers" in p for p in problems)
+
+
+def test_a_note_value_with_a_flipped_sign_fails(copy, cfg):
+    data = copy / "notes" / "cnn-ramp-coefficients" / "data.csv"
+    text = data.read_text(encoding="utf-8")
+    assert "-1.159" in text
+    data.write_text(text.replace("-1.159", "1.159", 1), encoding="utf-8")
+    _, problems = sup.run(cfg, copy, None)
+    assert any("note cnn-ramp-coefficients" in p and "1.159" in p for p in problems)
+
+
+def test_a_note_value_with_a_flipped_exponent_fails(copy, cfg):
+    data = copy / "notes" / "mms-modal-coefficients" / "data.csv"
+    text = data.read_text(encoding="utf-8")
+    assert "1.40×10^-3" in text
+    data.write_text(text.replace("1.40×10^-3", "1.40×10^3", 1), encoding="utf-8")
+    _, problems = sup.run(cfg, copy, None)
+    assert any("note mms-modal-coefficients" in p and "1.40e3" in p for p in problems)
+
+
+@pytest.mark.parametrize("latex,text,tokens", [
+    ("{$-0.08\\%$}", "-0.08%", ["-0.08"]),
+    ("$1.9$--$2.5$", "1.9–2.5", ["1.9", "2.5"]),
+    ("$3.07\\!\\times\\!10^{-4}$", "3.07×10^-4", ["3.07e-4"]),
+    ("$-1.159$ at $h_{64}$", "-1.159 at h_64", ["-1.159", "64"]),
+    ("$\\lesssim\\!10^{-9}$", "≲10^-9", ["10", "-9"]),
+    ("$3\\times10^{-3$", "3×10^{-3", ["3", "10", "-3"]),   # an unbalanced brace is not an exponent
+    ("$-1.40\\times 10^{-3}$", "-1.40×10^-3", ["-1.40e-3"]),  # the sign of a mantissa survives (R4-M08)
+])
+def test_numbers_tokenise_latex_and_text_alike(latex, text, tokens):
+    assert sup.number_tokens(latex) == tokens and sup.number_tokens(text) == tokens
+
+
+def test_a_mistyped_printed_key_is_a_mismatch_not_a_crash(copy, tmp_path):
+    """A `printed:` key the figure does not compute must be reported as a mismatch and end the
+    check with exit code 1, not a traceback (repo_code.md F7)."""
+    from omegaconf import OmegaConf
+    figure = next(iter(OmegaConf.load(ROOT / "src" / "gnn4buoyancy" / "conf" / "supplementary.yaml").figures))
+    r = subprocess.run([sys.executable, "-m", "gnn4buoyancy.supplementary", "mode=check",
+                        f"root={copy}", f"+figures.{figure}.printed.no_such_key=1.0",
+                        f"hydra.run.dir={tmp_path / 'run'}"],
+                       cwd=ROOT, capture_output=True, text=True, timeout=300)
+    assert r.returncode == 1 and "Traceback" not in r.stderr, r.stdout + r.stderr
+    assert "no_such_key" in r.stdout and "MISMATCH" in r.stdout

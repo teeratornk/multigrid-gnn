@@ -56,7 +56,6 @@ figures:
   engine-geom: {}
   rbc-stats:
     warmup: 0.15                # diffusion times discarded before the developed window
-    sokal_window: 6.0           # automatic windowing constant of the autocorrelation time
     reliable_blocks: 50         # blocking levels with at least this many blocks bound the interval
     acf_max_lag: 25.0           # turnovers of autocorrelation drawn in panel (b)
     johnston_doering: {prefactor: 0.138, exponent: 0.285}

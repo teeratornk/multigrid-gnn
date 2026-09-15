@@ -52,7 +52,23 @@ _RULES = re.compile(r"\\(?:toprule|bottomrule|hline)(?![A-Za-z])|\\cmidrule(?:\(
                     r"|\\addlinespace(?:\[[^\]]*\])?")
 _MIDRULE = re.compile(r"\\midrule(?![A-Za-z])")
 _AMP = re.compile(r"(?<!\\)&")
-_NUMBER = re.compile(r"\d+(?:\.\d+)?")
+# A printed number keeps its sign, and a number in scientific notation keeps its exponent, so a
+# dropped minus or a flipped exponent sign changes the token. The LaTeX form ("$-1.40\\times
+# 10^{-3}$", "3.07\\!\\times\\!10^{-4}") and the plain-text form ("-1.40×10^-3") tokenise alike.
+# A minus is a sign only when it does not follow a word character, a digit, a dot or another
+# minus, so "1.9--2.5", "h_{64}" and "1e-5" keep their unsigned digits.
+_SIGNED = r"(?:(?<![\w.\-])-)?\d+(?:\.\d+)?"
+# The exponent is braced on both sides or on neither; an unbalanced brace is not an exponent.
+_TOKEN = re.compile(rf"(?P<m>{_SIGNED})(?:\\[!,;]|\s)*(?:\\times|×)(?:\\[!,;]|\s)*10\^(?:\{{(?P<e>-?\d+)\}}|(?P<e2>-?\d+))"
+                    rf"|(?P<p>{_SIGNED})")
+
+
+def number_tokens(text: str) -> list[str]:
+    """The printed numbers of `text`, in order: "-0.08", "2.5", and "3.07e-4" for 3.07 x 10^-4."""
+    return [f"{m.group('m')}e{int(m.group('e') or m.group('e2'))}" if m.group("m") is not None
+            else m.group("p") for m in _TOKEN.finditer(text)]
+
+
 # The argument prefixes of a merged cell, which are layout rather than printed numbers.
 _SPAN_ARGS = re.compile(r"\\multirow\{[^}]*\}\{[^}]*\}|\\multicolumn\{[^}]*\}\{[^}]*\}")
 # Commands whose argument is the text: (name, arguments, which one to keep).
@@ -237,8 +253,8 @@ def check_table(name: str, published: str, data: list[list[str]]) -> list[str]:
                         "run mode=refresh")
     first = 1 if t["columns"][0] == "group" else 0
     for i, (raw_row, cells) in enumerate(zip(t["raw"], t["printed"]), 1):
-        want = _NUMBER.findall(_SPAN_ARGS.sub("", raw_row))
-        got = _NUMBER.findall(" ".join(cells[first:]))
+        want = number_tokens(_SPAN_ARGS.sub("", raw_row))
+        got = number_tokens(" ".join(cells[first:]))
         if want != got:
             problems.append(f"table {name} row {i}: printed numbers {want}, data {got}")
     return problems
@@ -251,9 +267,9 @@ def check_note(name: str, published: str, data: list[list[str]]) -> list[str]:
         return [f"note {name}: data.csv has no value column"]
     col = data[0].index("value")
     problems = [f"note {name} row {i}: no number in the value {row[col]!r}"
-                for i, row in enumerate(data[1:], 1) if not _NUMBER.findall(row[col])]
-    missing = (Counter(n for row in data[1:] for n in _NUMBER.findall(row[col]))
-               - Counter(_NUMBER.findall(published)))
+                for i, row in enumerate(data[1:], 1) if not number_tokens(row[col])]
+    missing = (Counter(n for row in data[1:] for n in number_tokens(row[col]))
+               - Counter(number_tokens(published)))
     if missing:
         problems.append(f"note {name}: values not printed in published.tex: "
                         f"{sorted(missing.elements())}")
@@ -449,7 +465,7 @@ def main(cfg: DictConfig) -> None:
                   out / "supplementary.summary.json")
     for name in cfg.figures:
         for key in sorted(cfg.figures[name].get("printed", {})):
-            print(f"  {name} {key}: {numbers[name][key]}")
+            print(f"  {name} {key}: {numbers[name].get(key, 'not computed')}")
     for p in problems:
         print(f"  MISMATCH {p}")
     print(f"supplementary {cfg.mode}: {len(cfg.tables)} tables, {len(cfg.notes)} notes, "

@@ -1,4 +1,4 @@
-"""Conjugate gradients preconditioned by one V-cycle.
+"""Conjugate gradients preconditioned by one V-cycle, or by the `precondition` given.
 
 The V-cycle is used as a preconditioner rather than as a standalone solver.
 Applying it as a stationary iteration on an indefinite or badly scaled operator
@@ -26,7 +26,8 @@ def pcg(levels: list[Level], b: torch.Tensor, *, rtol: float = 1e-8, max_iter: i
         omega: float = 0.7, n_pre: int = 2, n_post: int = 2,
         x0: torch.Tensor | None = None, allow_unsymmetric: bool = False,
         operator=None, precondition=None) -> SolveResult:
-    # `operator` replaces levels[0].A and `precondition` replaces one V-cycle on `levels`.
+    # `operator` replaces levels[0].A and `precondition` replaces one V-cycle on `levels`, on
+    # every step including the first, whose direction is z0 = B r0.
     # The experiments need both: a cycle built on one operator applied to another, and an
     # fp32 cycle inside fp64 CG. Left as None they are exactly the original pair, and
     # tests/test_diagnostics.py checks that path bitwise against the previous code.
@@ -54,12 +55,20 @@ def pcg(levels: list[Level], b: torch.Tensor, *, rtol: float = 1e-8, max_iter: i
     hist = [torch.linalg.vector_norm(r).item() / b_norm]
     if hist[0] <= rtol:
         return SolveResult(x, 0, hist, True)
-    z = v_cycle(levels, r, omega=omega, n_pre=n_pre, n_post=n_post)
+    z = precondition(r)
     p, rz = z.clone(), torch.dot(r, z)
+    done = 0  # completed iterations; the loop variable is not it on the breakdown and cap exits
     for k in range(1, max_iter + 1):
         Ap = A(p)
-        alpha = rz / torch.dot(p, Ap)
+        pAp = torch.dot(p, Ap)
+        if not (torch.isfinite(pAp) and pAp > 0 and torch.isfinite(rz)):
+            # Breakdown: the recurrence has underflowed or the curvature is not positive, which
+            # happens when rtol sits below the working precision. Stop with the true residual
+            # of the last good iterate instead of dividing 0 by 0 into NaN.
+            break
+        alpha = rz / pAp
         x = x + alpha * p
+        done = k
         r = r - alpha * Ap
         rel = torch.linalg.vector_norm(r).item() / b_norm
         hist.append(rel)
@@ -75,7 +84,7 @@ def pcg(levels: list[Level], b: torch.Tensor, *, rtol: float = 1e-8, max_iter: i
             rel = torch.linalg.vector_norm(r).item() / b_norm
             hist[-1] = rel
             if rel <= rtol:
-                return SolveResult(x, k, hist, True)
+                return SolveResult(x, done, hist, True)
             z = precondition(r)
             p, rz = z.clone(), torch.dot(r, z)
             continue
@@ -84,7 +93,8 @@ def pcg(levels: list[Level], b: torch.Tensor, *, rtol: float = 1e-8, max_iter: i
         p = z + (rz_new / rz) * p
         rz = rz_new
     # Report the true residual on exit too, so a non-converged result is not described by
-    # a drifted recurrence either.
+    # a drifted recurrence either. `done` counts the completed iterations, so `residuals`
+    # keeps one entry per iteration plus the initial one on every exit.
     rel = (torch.linalg.vector_norm(b - A(x)).item() / b_norm)
     hist[-1] = rel
-    return SolveResult(x, max_iter, hist, rel <= rtol)
+    return SolveResult(x, done, hist, rel <= rtol)
