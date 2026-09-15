@@ -25,6 +25,7 @@ end of this file.
 
 | path | what it holds |
 |---|---|
+| `src/gnn4buoyancy/cli.py` | the `gnn4buoyancy` command: one solve from a Hydra configuration |
 | `src/gnn4buoyancy/layers.py` | the sparse apply, as gather, weight, scatter-add |
 | `src/gnn4buoyancy/hierarchy.py` | smoothed aggregation frozen into fixed edge weights |
 | `src/gnn4buoyancy/vcycle.py` | the V-cycle, as a sequence of message-passing layers |
@@ -161,7 +162,7 @@ What each experiment shows, with the ranges recorded in `experiments/expected/`:
 | `vcycle_identity` | The graph V-cycle equals the same cycle written in scipy, run on the hierarchy the graph holds, for 3 cases and 9 smoother settings. | relative difference 3.5e-18 to 8.8e-17 | 1.7e-17 to 2.1e-16 |
 | `vcycle_spd` | R equals P^T exactly on every level. The cycle is symmetric at 2 and 2 sweeps and visibly unsymmetric at 3 and 1. `<x,Bx>` is positive. | symmetry defect at most 1.8e-17 at 2 and 2, against 2.1e-4 to 3.5e-3 at 3 and 1 | at most 2.0e-17 at 2 and 2, against 5.2e-5 to 2.5e-3 at 3 and 1 |
 | `hierarchy_rebuild` | Two builds from one NumPy seed are equal bit for bit. Other seeds move the coarse operators, and no iteration count changes. | coarse drift 2.3e-4 to 8.1e-3 | 1.0e-4 to 1.6e-2, solutions agree to 1.3e-10 |
-| `stationary_vs_pcg` | The cycle as a stationary solver takes more iterations than the same cycle inside CG, at omega 1 and at the best fixed omega. Its rate is the one the extreme eigenvalues of BA predict. The count does not grow steadily with the grid. | 1.25 to 32 times the CG count | 1.5 to 13.9 times; heat_sink at omega 1 takes 123, 279 and 77 against 16, 20 and 17 |
+| `stationary_vs_pcg` | The cycle as a stationary solver takes more iterations than the same cycle inside CG, at omega 1 and at the best fixed omega. Its rate is the one the extreme eigenvalues of BA predict. The count does not grow steadily with the grid. | 1.25 to 32 times the CG count | 1.5 to 14 times; heat_sink at omega 1 takes 123, 279 and 77 against 16, 20 and 17 |
 | `stationary_mismatch` | A cycle built on the uniform operator and iterated on the contrast 1e3 operators diverges at omega 1, 0.5, 0.3, 0.1 and 0.05, because lambda_max(BS) is about 700 and 1000. At 0.9 of 2/lambda_max it does not diverge. CG with the same cycle converges. | diverges within 6 iterations; CG takes 58 to 102 | diverges within 6 iterations; CG takes 89 to 170 |
 | `mixed_precision` | CG in fp64 with the fp32 cycle takes the fp64 iteration count. The whole solve in fp32 does not reach 1e-8. | 0 extra iterations; fp32 stops at 1.4e-7 or above | 0 extra; fp32 stops at 2.6e-7 to 3.9e-4 |
 
@@ -323,6 +324,7 @@ rebuild is identical bit for bit.
 |---|---|
 | 1.2.0 | first public release, under the MIT licence; adds `supplementary/` |
 | 1.2.1 | corrects four entries in the list of corrections in `supplementary/README.md` and lists the errors a later audit found in the supplementary record; carries the fixes of the pre-submission review: the first conjugate-gradient step applies the given preconditioner, a breakdown guard, NumPy seeded in the CLI, a signed scientific-notation tokeniser in the record checks, a GPU launcher that refuses to run without a CUDA device, and a test for each; the mixed-precision expectations were refreshed, and only `mixed_solution_diff` moved |
+| 1.2.2 | documentation only: the supplementary README states the Supplementary Information's page count after the review, the CLI module is listed in the contents table, and one range is rounded as the paper rounds it; no code or result change |
 
 Versions before 1.2.0 were review releases. They are not in this repository's history, so
 nothing here points at them.

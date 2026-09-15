@@ -1,7 +1,7 @@
 # Material moved out of the paper's Supplementary Information
 
-The paper's Supplementary Information was shortened from 57 to 29 pages before submission. What
-left it is kept here as data, with the code that turns the data back into the printed tables and
+The paper's Supplementary Information was shortened from 57 to 29 pages before submission, and
+stands at 33 pages after the pre-submission review's corrections. What left it is kept here as data, with the code that turns the data back into the printed tables and
 four of the five figures, and checks them against what was printed.
 
 These are results of the production solvers, which are not part of this package. The package does
