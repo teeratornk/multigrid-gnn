@@ -106,6 +106,11 @@ values.
   correlation, 0.40, is more than ten times the ±0.025 interval, not two orders of magnitude larger.
 - Hardware and software: the GPU runs used Python 3.12, PyTorch 2.5.1+cu124, CUDA 12.4 and NCCL
   2.21.5, not Python 3.11, PyTorch 2.2.2+cu118, CUDA 11.8 and NCCL 2.19.3.
+- Licence: page 55 of `si_before_cut.pdf` (Note S11.6) says the example accompanies the
+  submission for the editor and reviewers under review terms, with no licence granted at this
+  stage. That was the position before release. From version 1.2.0 this package is released under
+  the MIT licence, as `LICENSE`, `pyproject.toml` and `CITATION.cff` state. The pre-cut pages keep
+  the sentence as printed.
 
 ## Errors found in this record after release
 
@@ -250,8 +255,8 @@ uv run gnn4buoyancy-supplementary mode=check      # checks only, exits nonzero o
 Run from the repository root. Each run writes to `outputs/supplementary/<date>_<time>/`. Drawing
 the figures needs matplotlib, which `uv sync --locked --extra dev` or `--extra plots` installs.
 Without it the default mode still writes the tables and runs the checks, then exits nonzero with a
-message. `mode=check` does not need matplotlib. `mode=refresh` rewrites each `data.csv` from its
-`published.tex`.
+message. `mode=check` does not need matplotlib. `mode=refresh` rewrites each table's `data.csv` from its
+`published.tex`; a note's `data.csv` is written by hand and is never rewritten.
 
 ## What is checked
 
@@ -259,8 +264,12 @@ message. `mode=check` does not need matplotlib. `mode=refresh` rewrites each `da
 
 - each `data.csv` is what its `published.tex` parses to;
 - the numbers of each printed row, read from the LaTeX itself, are the numbers of its data row;
-- every number of every value in a note's `data.csv` is printed in its `published.tex`;
-- every file matches its digest in `manifest.yaml`, and no unlisted file is present;
+- every number of every value in a note's `data.csv` is printed in its `published.tex`, counted
+  with multiplicity. This is a presence check over the whole file: it catches a dropped, changed
+  or wrongly signed value, and it does not tie a value to its label, so two values swapped
+  between the rows of one note would pass;
+- every exported file matches its digest in `manifest.yaml`, and nothing unlisted sits beside
+  them, apart from this README and the `data.csv` files the package writes;
 - the numbers the pre-cut captions and text printed about the figures, listed under `printed:` in
   `src/gnn4buoyancy/conf/supplementary.yaml`, are recomputed from the figures' inputs and match at
   the printed digits. Examples are the Rayleigh-Bénard mean Nusselt number with its interval, and

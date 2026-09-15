@@ -9,21 +9,17 @@ It contains one component of that work: the fixed-weight algebraic multigrid pre
 solve, written as message passing, small enough to read in full and to run on a laptop.
 It is not a reproduction of the benchmark. The production solvers are proprietary and are
 not released. Reproduction of the reported numbers rests on the specification in Methods
-and in the Supplementary reproducibility note, together with the per-run configurations,
-which will be deposited on publication.
+and in the Supplementary reproducibility note, which records the run configurations.
 
-Version 1.1.0 adds six pressure-solve experiments that run from one command each. They run
-on this package's own operators, and every number they print is a number about those
-operators. None of them reproduces a value reported for the production solvers.
+The package holds six pressure-solve experiments that run from one command each. They run on
+this package's own operators, and every number they print is a number about those operators.
+None of them reproduces a value reported for the production solvers.
 
-Version 1.2.0 is the first public release, under the MIT licence. It adds `supplementary/`: the
-tables, figures and text moved out of the paper's Supplementary Information, kept as data with the
-code that rebuilds the tables and four of the five figures and checks them against what was
-printed. Unlike the rest of the package, these are results of the production solvers. See
-`supplementary/README.md`.
-
-Version 1.2.1 corrects four entries in the list of corrections in `supplementary/README.md` and
-lists the errors a later audit found in the supplementary record. The code is unchanged.
+It also holds `supplementary/`: the tables, figures and text moved out of the paper's
+Supplementary Information, kept as data with the code that rebuilds the tables and four of the
+five figures and checks them against what was printed. Unlike the rest of the package, these are
+results of the production solvers. See `supplementary/README.md`. The versions are listed at the
+end of this file.
 
 ## Contents
 
@@ -69,6 +65,11 @@ extras. `uv.lock` pins the exact versions the results below were produced with. 
 GPU is required: every case here is small by design and runs on a laptop CPU. Only the
 `paper` experiment profile asks for a GPU.
 
+Install uv first (https://docs.astral.sh/uv/). The results below were produced with uv 0.9.30 and
+CPython 3.12; the CPU-only install path was also run on 3.10 and 3.11. The locked torch carries the
+CUDA 13 runtime, so a GPU run needs a driver new enough for CUDA 13. On an older driver torch
+reports no device, the eight GPU tests skip, and the `paper` profile refuses to run.
+
 ## Install and run
 
 ```bash
@@ -88,21 +89,28 @@ route to a package index, sync once where there is one, then use
 
 A laptop can skip the NVIDIA runtime with
 `uv venv && uv pip install -e ".[dev]" --torch-backend=cpu`. That install does not read
-the lock, so its versions are not the tested ones.
+the lock, so its versions are not the tested ones, and it installs on whatever Python `uv venv`
+is given, so give it one of the three versions above.
 
 ### Expected output
 
-The first command prints the following, up to timings and the last digits of the residual:
+The first command prints the following, up to timings:
 
 ```
 case=conjugate_cavity  n=4096  nnz=20224
 hierarchy: 4 levels, sizes [4096, 704, 80, 9], setup 0.011s
-solve: 10 iterations, relative residual 7.090e-09, converged, 0.009s
+solve: 10 iterations, relative residual 7.086e-09, converged, 0.009s
 wrote result.json
 ```
 
-The last digits move because smoothed aggregation draws a start vector from NumPy's global
-random state, which the CLI does not seed. The experiments below seed it.
+The CLI seeds NumPy and torch from `seed`, so two runs of one configuration on one machine
+print the same digits; `tests/test_config.py` holds it to that. Smoothed aggregation draws its
+start vector from NumPy's global random state, so without the seed the last digits would move,
+and a different BLAS or thread count still moves them.
+
+`result.json` is written in the directory you run from, and each run overwrites it. Pass `out=`
+to keep more than one. Hydra writes its own directory under `outputs/<date>/<time>/` as well,
+holding the resolved configuration and the log, not the result.
 
 `solver=jacobi_ref` solves the same system with the same conjugate gradients and no
 hierarchy. It takes 115 iterations against 10.
@@ -120,7 +128,7 @@ None of them is a value from the production solvers, and none stands in for one.
 
 | profile | grids | device | in the default test run |
 |---|---|---|---|
-| `quick` | 16 x 16 and 32 x 32 | CPU | yes, about 5 s for all six |
+| `quick` | 16 x 16 and 32 x 32 | CPU | yes; seconds to half a minute for all six, depending on the cache |
 | `paper` | 32 x 32, 64 x 64 and 128 x 128 | one GPU | only where CUDA is available |
 
 ```bash
@@ -135,10 +143,16 @@ uv run gnn4buoyancy-experiment experiment=mixed_precision profile=quick
 Use `profile=paper` for the GPU grids. Hydra's `-m` runs several in one call, for example
 `uv run gnn4buoyancy-experiment -m profile=quick experiment=vcycle_identity,vcycle_spd`.
 
-Every experiment uses the V-cycle of `solver/graph_mg.yaml`: weighted Jacobi with omega 0.7,
-two sweeps before and two after, the coarsest level relaxed, and CG to a relative residual
-of 1e-8. NumPy is seeded before every hierarchy build and torch runs its deterministic
-kernels, so a rerun on the same machine gives the same summary bit for bit.
+Every experiment builds its V-cycle from `solver/graph_mg.yaml`: weighted Jacobi, the coarsest
+level relaxed rather than solved, and, where conjugate gradients is used, the relative residual
+of 1e-8 that file sets. Four of them vary what the file fixes, because the variation is the
+claim: `vcycle_identity` runs omega 0.5, 0.7 and 0.9 with sweeps (2,2), (1,1) and (3,1);
+`vcycle_spd` runs (2,2) and (3,1); `stationary_vs_pcg` runs omega 1 and the best fixed omega;
+`stationary_mismatch` runs omega 1, 0.5, 0.3, 0.1 and 0.05, and one step below the stability
+limit. NumPy is seeded before every hierarchy build and torch runs its deterministic kernels, so
+a rerun on the same machine reproduces the measured half of the summary bit for bit. The
+environment and timing block is not part of that: it carries the library versions, the device
+name and the wall time, and it is stripped before anything is compared or committed.
 
 What each experiment shows, with the ranges recorded in `experiments/expected/`:
 
@@ -151,9 +165,10 @@ What each experiment shows, with the ranges recorded in `experiments/expected/`:
 | `stationary_mismatch` | A cycle built on the uniform operator and iterated on the contrast 1e3 operators diverges at omega 1, 0.5, 0.3, 0.1 and 0.05, because lambda_max(BS) is about 700 and 1000. At 0.9 of 2/lambda_max it does not diverge. CG with the same cycle converges. | diverges within 6 iterations; CG takes 58 to 102 | diverges within 6 iterations; CG takes 89 to 170 |
 | `mixed_precision` | CG in fp64 with the fp32 cycle takes the fp64 iteration count. The whole solve in fp32 does not reach 1e-8. | 0 extra iterations; fp32 stops at 1.4e-7 or above | 0 extra; fp32 stops at 2.6e-7 to 3.9e-4 |
 
-The two stationary experiments show a mechanism on these operators. The Supplementary
-note's iteration counts, and their growth with refinement, belong to the production
-pressure operator, which is not part of this package.
+The two stationary experiments show a mechanism on these operators. The iteration counts of
+the production standalone multigrid, and their growth with refinement, are in
+`supplementary/tables/mgsolver` and belong to the production pressure operator, which is not
+part of this package.
 
 Each run writes `<name>.summary.json` into its Hydra run directory under `outputs/`. It holds
 the rows measured, the claims evaluated on them, and the environment: package, Python, torch
@@ -180,9 +195,10 @@ Every run parameter is a Hydra config group under `src/gnn4buoyancy/conf/`: `cas
 the operator, `solver/` selects the preconditioner, and `experiment/` holds one file per
 experiment. These are this example's own groups. The longer list in the paper's
 Supplementary reproducibility note belongs to the production solver, which is not part of
-this package. Nothing is hardcoded in the source, which `tests/test_config.py` checks by
-grepping for numeric literals outside signature defaults. Each result file records the
-resolved configuration that produced it.
+this package. No run parameter is set in the source outside a signature default:
+`tests/test_config.py::test_no_run_parameter_is_hardcoded_in_source` greps the package's modules,
+`cli.py` aside, for an assignment of a run-parameter name to a numeric literal on a line that is
+not a `def`. Each result file records the resolved configuration that produced it.
 
 The experiment app composes `conf/experiments.yaml`. It takes the V-cycle from
 `solver/graph_mg.yaml` and the operators from `case/*.yaml`, the same files the CLI reads,
@@ -197,9 +213,13 @@ refuses them.
 ## Tests
 
 ```bash
-uv run pytest -q                 # full suite
-uv run pytest -q -m "not slow"   # quick subset
+uv run pytest                    # full suite
+uv run pytest -m "not slow"      # quick subset
+uv run pytest -rs                # full suite, with the reason for every skip
 ```
+
+`pyproject.toml` already passes `-q`. A second `-q` on the command line makes it `-qq`, which
+drops the `N passed` line that the counts below quote.
 
 It checks, among others:
 
@@ -238,21 +258,21 @@ whether this execution is faithful.
 
 ## Verification status
 
-276 tests, of which some depend on the machine rather than on the code:
+309 tests, of which some depend on the machine rather than on the code:
 
 | environment | result |
 |---|---|
-| NVIDIA H200 | **276 pass, 0 skip** |
-| CPU only | 268 pass, 8 skip (both parametrizations of `test_gpu_matches_cpu`, and `test_paper_on_gpu_matches_expected` for each experiment) |
-| no build backend available to uv | the wheel-build test skips, since it cannot build |
+| NVIDIA H200 | **309 pass, 0 skip** |
+| CPU only | 301 pass, 8 skip (both parametrizations of `test_gpu_matches_cpu`, and `test_paper_on_gpu_matches_expected` for each experiment) |
+| no route to a package index | the wheel-build test can skip as well, since `uv build` needs a build backend |
 
 At the tagged commit, with a clean working tree, the full suite passes on an H200 and every
-experiment passes in check mode for both profiles. Version 1.1.0 has the same solver and
-experiment code. A fresh clone of its tag, installed with `uv sync --locked --extra dev`, gave
-the same result, and its paper summaries were identical bit for bit to those of a working-tree
-run on another node.
+experiment passes in check mode for both profiles. A fresh clone of the tag, installed with
+`uv sync --locked --extra dev`, gives the same result.
 
-`run_gpu_check.sbatch` reproduces the GPU leg of the test suite, and
+`run_gpu_check.sbatch` runs the full suite on a GPU node and one CLI solve on the GPU. It refuses
+to start where torch sees no CUDA device, because a green suite with the device tests skipped
+proves nothing, and it fails when the CLI does not report a converged solve.
 `run_experiments.sbatch` runs every experiment, the quick profile on the CPU and the paper
 profile on the GPU, against its expectation. Set `EXPERIMENTS_MODE=refresh` to rewrite the
 expectations instead. Both scripts record the commit and the number of modified files next
@@ -296,6 +316,16 @@ state, so two unseeded builds of the same matrix differ in their coarse operator
 to 2e-2 relative on these cases. Each build is still a valid preconditioner, and no
 iteration count here changes. Seed NumPy before the build, as the experiments do, and a
 rebuild is identical bit for bit.
+
+## Versions
+
+| version | what changed |
+|---|---|
+| 1.2.0 | first public release, under the MIT licence; adds `supplementary/` |
+| 1.2.1 | corrects four entries in the list of corrections in `supplementary/README.md` and lists the errors a later audit found in the supplementary record; carries the fixes of the pre-submission review: the first conjugate-gradient step applies the given preconditioner, a breakdown guard, NumPy seeded in the CLI, a signed scientific-notation tokeniser in the record checks, a GPU launcher that refuses to run without a CUDA device, and a test for each; the mixed-precision expectations were refreshed, and only `mixed_solution_diff` moved |
+
+Versions before 1.2.0 were review releases. They are not in this repository's history, so
+nothing here points at them.
 
 ## Licence and citation
 

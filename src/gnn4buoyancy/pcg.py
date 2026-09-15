@@ -1,8 +1,11 @@
 """Conjugate gradients preconditioned by one V-cycle, or by the `precondition` given.
 
-The V-cycle is used as a preconditioner rather than as a standalone solver.
-Applying it as a stationary iteration on an indefinite or badly scaled operator
-is not reliable; wrapping it in a Krylov method is.
+The V-cycle is used as a preconditioner rather than as a standalone solver. As a
+stationary iteration it converges only for a step length below 2/lambda_max(BA), which
+has to be known or guessed, and the `stationary_mismatch` experiment shows what a wrong
+one does. Inside conjugate gradients no step length is chosen. Conjugate gradients needs
+the operator and the preconditioner to be symmetric positive definite, which is what
+`vcycle_spd` checks.
 """
 from __future__ import annotations
 

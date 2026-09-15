@@ -3,7 +3,8 @@
 Down the levels: smooth, form the residual, restrict. Up: prolong the coarse
 correction, smooth again. Every one of those is a message-passing application on
 that level's graph, so the whole cycle is one kind of operation on a sequence of
-graphs. The coarsest level is relaxed by the same smoother, not solved directly.
+graphs. The coarsest level is relaxed by the same smoother with the pre-sweep count, not solved
+directly.
 """
 from __future__ import annotations
 

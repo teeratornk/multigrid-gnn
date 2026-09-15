@@ -1,7 +1,9 @@
 """Operators for the example cases.
 
-All three are the pressure Poisson operator the paper's projection step solves, on
-geometries small enough to run on a laptop CPU. The engine geometry of the
+All three are the symmetric positive definite operator of a projection step, on geometries
+small enough to run on a laptop CPU. conjugate_cavity is the constant-coefficient pressure
+Poisson operator; the other two carry a conductivity jump across a solid-fluid interface,
+which is what makes the coarsening hard. The engine geometry of the
 applied section is not included here; engine_bore is a parametric stand-in for its
 curved interface.
 """

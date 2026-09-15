@@ -18,7 +18,7 @@ run directory, and recomputes the figure numbers listed under `printed:` in the 
 come from the pre-cut captions and text. mode=check exits nonzero unless each data.csv is what its
 published.tex parses to, the numbers of every printed row are the numbers of its data row, every
 file matches its digest and every listed figure number matches its printed digits. mode=refresh
-rewrites each data.csv from its published.tex. Every mode exits nonzero on any disagreement.
+rewrites each table's data.csv from its published.tex; a note's data.csv is written by hand. Every mode exits nonzero on any disagreement.
 
 These are results of the production solvers, which are not part of this package. They are kept as
 data, with the code that turns the data into the printed tables and figures.
